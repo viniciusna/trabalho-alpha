@@ -1,0 +1,179 @@
+* {
+    font-family: 'Times New Roman', Times, serif;
+}
+
+::-webkit-scrollbar {
+    width: 0px;
+}
+
+.row-direction {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+body {
+    width: 100vw;
+    overflow-x: hidden;
+    overflow-y : scroll;
+    min-height: 90vh;
+
+    background-color: #0F0F0F;
+    color: #F8F0F0;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+main {
+    width: 95vw;
+    margin: 5vh 2.5% auto 2.5%;
+    height: 90vh;
+    min-height: 235px;
+
+    background: #DB1C1C;
+    border-radius: 40px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    align-self: center;
+}
+
+
+h2 {
+    margin-top: 10vh;
+    margin-bottom: 5vh;
+
+    font-size: 64px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 75px;
+    letter-spacing: 0em;
+    text-align: center;
+}
+
+p {
+    width: 85%;
+
+    font-size: 21px;
+    line-height: 40px;
+    letter-spacing: 0em;
+    text-indent: 30px;
+    text-align: justify;
+}
+
+#image-logo {
+    margin-top: 5vh;
+    width: 100%;
+    height: 37%;
+}
+
+/* Modais */
+
+.modal {
+    width: 30vw;
+    height: 40vh;
+    margin: 30vh 30vw 25vh 30vw;
+    padding: 5vh 5vw;
+    z-index: 1000;
+    position: fixed;
+    
+    background-color: #313030;
+    border-radius: 20px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+
+    /* Typography */
+    font-size: 36px;
+    line-height: 56px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+
+    color: #E5E5E5;
+}
+
+.btn-modal {
+    width: 8vw;
+}
+
+/* FINAL Modais */
+
+footer {
+    width: 100%;
+    height: 15vh;
+
+    background: #232323;
+    box-shadow: inset 0px 10px 20px 5px rgba(0, 0, 0, 0.4);
+}
+
+footer section {
+    width: 100%;
+    height: 100%;
+    padding: 15px 30px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#social-media {
+    width: 50vw;
+    justify-content: space-around;
+}
+
+footer h3 {
+   font-size: 20px;
+}
+
+#social-media td img{
+    vertical-align: middle;
+}
+
+.linkedin-logo {
+    width: 1em;
+}
+
+.login{
+    display: flex;
+}
+
+.login-inputs{
+    display: flex;
+    flex-direction: column;
+    padding: 5%;
+    margin-top: 5%;
+    margin-bottom: 5%;
+}
+
+#ranking{
+    width: 70%;
+}
+
+#ranking table {
+    border-collapse: collapse;
+    width: 70%;
+    border: 5px solid #000000 !important;
+  }
+  
+#ranking td, th {
+    border: 5px solid #000000 !important;
+    text-align: center;
+}
+  
+#ranking tr:nth-child(even) {
+    color: #DB1C1C !important;
+    background-color: #000000;
+}
+
+#ranking tr:nth-child(odd) {
+    color: #000000;
+}

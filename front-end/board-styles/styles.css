@@ -1,0 +1,124 @@
+@import url('https://fonts.googleapis.com/css2?family=Chewy&display=swap');
+
+* {
+    font-family: 'Chewy', cursive;
+}
+
+body {
+    background: 
+    linear-gradient(135deg, black 25%, transparent 25%) -50px 0,
+    linear-gradient(225deg, black 25%, transparent 25%) -50px 0,
+    linear-gradient(315deg, black 25%, transparent 25%),
+    linear-gradient(45deg, black 25%, transparent 25%);	
+    background-size: 2em 2em;
+    background-color: #232323;
+}
+
+body {
+    width: 100vw;
+    max-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.card {
+    width: 6.7vw;
+    height: auto;
+    border-radius: 13px;
+}
+
+.cards-in-hand {
+    cursor: pointer;
+    z-index: 4;
+}
+
+.card img {
+    width: 6.7vw;
+    height: auto;
+}
+
+#first-cheap, #img-second-cheap {
+    width: 7.65vw;
+    height: auto;
+
+    cursor: pointer;
+}
+
+#container-opponents-cheap-and-cards {
+    width: 100vw;
+    margin-top: 5vh;
+    display: flex;
+    justify-content: center;
+}
+
+#first-cheap {
+    position: relative;
+    right: 35vw;
+}
+
+#container-opponents-cards, #player-cards {
+    width: 30vw;
+    position: absolute;
+    display: flex;
+    justify-self: center;
+    justify-content: space-between;
+}
+
+#container-mid-screen {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+#playing-card-field {
+    width: 15%;
+    align-self: center;
+    margin: 3vh 0 3vh 0;
+    z-index: 0;
+    position: relative;
+}
+
+#container-card-player2 {
+    width: fit-content;
+    height: fit-content;
+
+    position: absolute;
+    left: 46%;
+}
+
+#container-card-player2 img {
+    width: 7.2vw;
+    height: auto;
+
+    position: relative;
+}
+
+#container-hand-cards-and-second-cheap {
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+}
+
+#second-cheap {
+    position: relative;
+    left: 35vw;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: right;
+}
+
+#img-second-cheap {
+    z-index: -1;
+}
+
+#cards-left {
+    height: 40px;
+    font-size: 25px;
+    width: 40px;
+    color: green;
+    position: absolute;
+    bottom: 10px;
+}

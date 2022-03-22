@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+    <head>
+        <!-- Meta-dados -->
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <!-- Favicon -->
+        <link rel="shortcut icon" href="./home-assets/favicon.png" type="image/x-icon">
+
+        <!-- Styles -->
+        <link rel="stylesheet" href="./home-styles/index.css">
+        <link rel="stylesheet" href="./home-styles/reset.css"> <!--Esse evita as modificações do navegador-->
+
+        <title>Elemental Clash</title>
+
+        <!-- Scripts -->
+        <script defer src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script> <!-- import JQuery -->
+        <script defer src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
+        <script defer src="./scripts/home-script.js"></script>
+    </head>
+
+    <body>
+        <main>
+            <img id="image-logo" src="./home-assets/logo.svg" alt="Logo do Elemental Clash">
+            
+            <div id="input-box">
+                <div id="input-user">
+                    <input type="text" id="input-player-name-login" placeholder="Usuário">
+                    <input type="password" id="input-player-password-login" placeholder="Senha">
+                </div>
+                <div id="response-msg-server"></div>
+                <br />
+                <button type="button" id="login-button" onclick="login()">Login</button>
+                <div>
+                    <button type="button" id="play-now-button" onclick="openModalHome('modal-loading')">Jogar agora</button>
+                    <button type="button" id="sign-up-button" onclick="openModalHome('modal-sign-up')">Cadastre-se</button>
+                </div>
+            </div>
+            <p>Role para baixo para ver as regras</p>
+        </main>
+ 
+        <section id="info-section"> <!-- ------Informações sobre o jogo e suas regras------ -->
+            <h2>Regras e tutorial do jogo</h2>
+            <p>
+                Elemental Clash é um jogo de cartas dividido em turnos, onde o baralho é composto por elementos, os jogadores devem jogar um elemento na mesa afim de vencer o elemento jogado pelo oponente.
+            </p>
+            <p>
+                Cada jogador recebe um baralho de 18 cartas, sendo 4 cartas de cada elemento básico (água, fogo, planta), 2 de éter, 2 de void e 2 de matéria-escura. Dessas 18 cartas, 3 são sorteadas e colocadas na mão do jogador.
+            </p>
+            <p>
+                Para a primeira jogada, o jogador a iniciar será escolhido através de um cara ou coroa.
+            </p>
+            <p>
+                O jogador deve jogar uma carta e aguardar o oponente jogar a carta dele, ao jogar, verifica-se qual das cartas venceram e então o jogador que venceu ganha 1 ponto e será o primeiro a jogar na rodada seguinte.
+            </p>
+            <p>
+                O jogador que ganhar 5 pontos primeiro vence o duelo.
+            </p>
+            <p>
+                A ordem de qual elemento ganha de qual outro elemento é mostrado na imagem abaixo, o éter ganha de todos os elementos básicos e perde para o void, mas o void perde para todos os elementos básicos. A matéria escura, não ganha nem perde pra ninguém, jogar matéria escura contra elementos básicos faz com que você seja o segundo a jogar na próxima rodada, mas matéria escura contra éter ou void faz com que você comece o próximo turno.
+            </p>
+
+            <img class="imagens" id="img-rules" src="./home-assets/diagram.svg" alt="Imagem para ilustrar a relação entre as cartas">
+
+            <p>
+                Em cada jogada, um dos jogadores irá expôr sua carta primeiro, dando ao outro a chance de escolher uma carta mais forte.
+            </p>
+            
+            <p>
+                O jogador que ganha a rodada, será o segundo a jogar na próxima rodada.
+            </p>
+            <p>
+                Em caso de empate, o jogador que ganhou a última rodada jogará primeiro.
+            </p>
+            <p>
+                Ao final de cada jogada, cada um pega mais uma carta de seu baralho.
+            </p>
+            <p>
+                O jogador que primeiro alcançar 5 pontos vence.
+            </p>
+            <p>
+                Caso o baralho acabe, vence o jogador que tiver obtido mais pontos. Caso não haja, a partida é encerrada com empate.
+            </p>
+            <p>
+                Divirta-se!!!
+            </p>
+
+        </section>
+
+        <div id="modal-loading" class="modal">
+            <h3>Buscando adversário digno</h3>
+            <img src="./home-assets/loading.gif">
+        </div>
+
+        <div id="modal-sign-up" class="modal">
+            <h3>Cadastro</h3>
+            <input type="text" id="input-player-email" placeholder="Email">
+            <input type="text" id="input-player-name" placeholder="Usuário">
+            <input type="password" id="input-player-password" placeholder="Senha">
+            <div id="response-register"></div>
+            <div id="sign-up-box-btn">
+                <button type="button" id="cancel-button" onclick="closeModalHome('modal-sign-up')">Cancelar</button>
+                <button type="button" id="sign-up-btn" onclick="register()">Cadastrar</button>
+            </div>
+        </div>
+
+        <div id="modal-timeout" class="modal">
+            <h3>Nenhum player encontrado</h3>
+            <span>Recarregue a página e busque novamente</span>
+        </div>
+
+        <footer>
+            <section>
+                <h3>Developed by Lovelace Students</h3>
+                <table id="social-media">
+                    <tbody>
+                        <tr>
+                            <td><a href="https://www.linkedin.com/in/fabr%C3%ADcio-rodrigues-pereira-68b844227/"><img class="linkedin-logo" src="./home-assets/linkedin.png"> Fabrício Rodrigues</a></td>
+                            <td><a href=""><img class="linkedin-logo" src="./home-assets/linkedin.png"> Fernando Ribeiro</a></td>
+                            <td><a href="https://www.linkedin.com/in/ridailda/"><img class="linkedin-logo" src="./home-assets/linkedin.png"> Flávia Souza</a></td>
+                            <td><a href=""><img class="linkedin-logo" src="./home-assets/linkedin.png"> José Neto</a></td>
+                            <td><a href="https://www.linkedin.com/in/vinicius-noronha-1540b2184/"><img class="linkedin-logo" src="./home-assets/linkedin.png"> Vinícius Noronha</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+            
+        </footer>
+    </body>
+</html>

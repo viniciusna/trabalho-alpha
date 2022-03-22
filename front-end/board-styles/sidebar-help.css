@@ -1,0 +1,33 @@
+#help {
+    right: 20px;
+    bottom: 20px;
+    padding: 1vh 2vw 5vh 3vw;
+    z-index: 1000;
+    position: fixed;
+
+    visibility: hidden;
+
+    border-radius: 20px;
+}
+
+#btn-menu-out {
+    float: right;
+}
+
+#help p{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: aliceblue;
+    font-size: 30px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 75px;
+    letter-spacing: 0em;
+}
+
+.diagram-rules{
+    height: 30vh;
+    width: 30vw;
+}

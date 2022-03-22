@@ -1,0 +1,35 @@
+.green-shine {
+	animation: green-glow 800ms ease-out infinite alternate;
+	border-color: rgb(40, 221, 40);
+	box-shadow: 0 0 5px rgba(0,255,0,2), inset 0 0 10px rgba(0,255,0,1.5);
+	outline: none;
+}
+
+@keyframes green-glow {
+    0% {
+		border-color: rgb(40, 221, 40);
+		box-shadow: 0 0 5px rgba(0,255,0,2), inset 0 0 10px rgba(0,255,0,1.5);
+    }
+    100% {
+		border-color: rgb(0,255,0);
+		box-shadow: 0 0 30px rgba(0,255,0,3), inset 0 0 10px rgba(0,255,0,2.5);
+    }
+}
+
+.red-shine {
+	animation: red-glow 800ms ease-out infinite alternate;
+	border-color: rgb(221, 40, 40);
+	box-shadow: 0 0 5px rgba(255,0,0,2), inset 0 0 10px rgba(255,0,0,1.5);
+	outline: none;
+}
+
+@keyframes red-glow {
+    0% {
+		border-color: rgb(221, 40, 40);
+		box-shadow: 0 0 5px rgba(255,0,0,2), inset 0 0 10px rgba(255,0,0,1.5);
+    }	
+    100% {
+		border-color: rgb(255, 0, 0);
+		box-shadow: 0 0 30px rgba(255,0,0,3), inset 0 0 10px rgba(255,0,0,2.5);
+    }
+}

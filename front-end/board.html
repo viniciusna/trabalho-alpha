@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+    <head>
+        <!-- Meta-dados -->
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <!-- Favicon -->
+        <link rel="shortcut icon" href="./board-assets/favicon.png" type="image/x-icon">
+
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+        <!-- Styles -->
+        <link rel="stylesheet" href="./board-styles/reset.css">
+        <link rel="stylesheet" href="./board-styles/styles.css">
+        <link rel="stylesheet" href="./board-styles/top.css">
+        <link rel="stylesheet" href="./board-styles/modal.css">
+        <link rel="stylesheet" href="./board-styles/cheap-flip.css">
+        <link rel="stylesheet" href="./board-styles/sidebar-help.css">
+        <link rel="stylesheet" href="./board-styles/sidebar-menu.css">
+        <link rel="stylesheet" href="./board-styles/shine.css">
+
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css"> <!-- import JQuery -->
+        <style>
+            label {
+                display: inline-block;
+                width: 5em;
+            }
+        </style>
+
+        <!-- Jquery Scripts 
+        <script defer src="https://code.jquery.com/jquery-3.6.0.js"></script>
+        <script defer src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script> -->
+        <script defer>
+            $( function() {
+                $( document ).tooltip();
+            } );
+        </script>
+
+        <!-- <script defer src="./scripts/board-script.js"></script> -->
+
+        <title>ELEMENTAL CLASH</title>
+    </head>
+
+    <body>
+        <nav id="menu">
+            <img src="./board-assets/menu_open_white_24dp.svg" onclick="closeModal('menu')" id="btn-menu-out" title="Fechar o menu">
+            <ul>
+                <li onclick="openModal('modal-rules')"> <img class="menu-img" src="./board-assets/rules-img.png"> REGRAS</li>
+                <li><a href="https://www.alphaedtech.org.br/" target="_blank"><img class="menu-img" src="./board-assets/alpha-img.png"> EDTECH</a></li>
+                <li onclick="openModal('modal-devs')"><img class="menu-img" src="./board-assets/dev-img.png"> OS DEVS</li>
+                <li onclick="openModal('modal-logoff')"><img class="menu-img" src="./board-assets/leave-img.svg"> SAIR</li>
+            </ul>
+        </nav>
+
+        <header>
+            <span id="header-buttons">
+                <img id="btn-menu-in" src="./board-assets/menu_white_24dp.svg" onclick="openMenu()" title="Abrir o menu">
+                <img id="btn-sound" src="./board-assets/music_note_white_24dp.svg" onclick="changeSoundConf()" title="Desativar o som">
+                <img id="btn-guide" src="./board-assets/subtitles_white_24dp.svg" title="Desativar balões guia">
+            </span>
+            <span id="right-side">
+                <div id="game-score">
+                    <span id="span-player1">PLAYER 1</span>
+                    <span> 
+                        <span class="score-numbers" id="score-player1">0</span>
+                        x
+                        <span class="score-numbers" id="score-player2">0</span> 
+                    </span>
+                    <span id="span-player2">PLAYER 2</span>
+                </div>
+            </span>
+            
+        </header>
+
+        <main>
+            <div id="container-opponents-cheap-and-cards">
+                <img id="first-cheap" class="cheap" src="./board-assets/cheap.svg" title="Deck do oponente">
+                <span id="container-opponents-cards">
+                    <img class="card" id="first-opponents-card" src="./board-assets/verso.svg" title="Carta do oponente">
+                    <img class="card" id="second-opponents-card" src="./board-assets/verso.svg" title="Carta do oponente">
+                    <img class="card" id="third-opponents-card" src="./board-assets/verso.svg" title="Carta do oponente">
+                </span>
+            </div>
+            <div id="container-mid-screen">
+                <img id="playing-card-field" src="./board-assets/playing-card-field.svg">
+                <div class="container-cards-from-hand" id="container-card-player2"></div>
+            </div>
+            <div id="container-hand-cards-and-second-cheap">
+                <div id="player-cards">
+                    <div class="container-cards-from-hand card" id="container-first-hand-card"></div>
+                    <div class="container-cards-from-hand card" id="container-second-hand-card"></div>
+                    <div class="container-cards-from-hand card" id="container-third-hand-card"></div>
+                </div>
+
+                <div class="cheap" id="second-cheap">
+                    <img id="img-second-cheap" class="cheap" src="./board-assets/cheap.svg">
+                    <p id="cards-left">15</p>
+                    <!-- <div class="flip-card">
+                        <div class="flip-card-inner">
+                            <img id="pickable-verso" class="card flip-card-front" src="./board-assets/verso.svg" onclick="flipCard()">
+                            <img id="pickable-card" class="card flip-card-back" src="./board-assets/card-ether.svg">
+                        </div>
+                    </div> -->
+                </div>
+                
+                <div class="container-cards-from-hand" id="container-card-player2"></div>
+            </div>
+            <img id="btn-help" src="./board-assets/question_mark_white_24dp.svg" onclick="openHelp('help')" title="Abrir Ajuda">
+        </main>
+        
+    <!------------------------Modais------------------------>
+        <div id="container-modais">
+            <div id="modal-logoff" class="modal modal-div">
+                <h3>DESEJA</br>MESMO SAIR?</h3>
+                <div class="row-direction">
+                    <a class="btn-back-to-home">
+                        <button id="btn-modal-logoff" class="btn-modal">SAIR</button>
+                    </a>
+                    <button id="btn-modal-cancel" class="btn-modal" onclick="closeModal('modal-logoff')">VOLTAR</button>
+                </div>
+            </div>
+
+            <div id="modal-initial" class="modal modal-div">
+                <h3 id="description-modal-initial"></h3>
+                <div class="row-direction">
+                    <button onclick="closeModal('modal-initial')">OK</button>
+                </div>
+            </div>
+
+            <div id="modal-general" class="modal modal-div">
+                <h3 id="description-modal"></h3>
+                <div class="row-direction">
+                <a class="btn-back-to-home">
+                        <button id="btn-modal-logoff" class="btn-modal">HOME</button>
+                </a>
+                </div>
+            </div>
+
+            <div id="modal-rules" class="modal-div">
+                <img onclick="closeModal('modal-rules')" src="./board-assets/close_white_24dp.svg" id="rules-close">
+                <h2>Regras do jogo</h2>
+                <p>Elemental Clash é um jogo de cartas dividido em turnos e composto por dois baralhos de elementos. Cada jogador recebe um baralho de 14 cartas, sendo 4 cartas do elemento água, 4 do fogo, 4 de planta e 2 de éter. Dessas 14 cartas, 3 são sorteadas e colocadas na mão do jogador.</p>
+                <p>Para jogá-lo, um jogador deve jogar uma carta e aguardar o oponente jogar a carta dele, ao jogar, verifica-se qual das cartas venceram e então o jogador que venceu ganha 1 ponto e será o primeiro a jogar na rodada seguinte. O jogador que ganhar 5 pontos primeiro vence o duelo.</p>
+                <p>A ordem de qual elemento ganha de qual outro elemento é mostrado na imagem abaixo, fogo vence planta, planta vence água e água vence fogo e por fim, o éter vence todos os outros elementos (use-o com sabedoria).</p>
+                <img id="img-rules" src="./board-assets/diagram.svg" alt="Imagem para ilustrar a relação entre as cartas">
+                <p>Caso os dois jogadores joguem um mesmo elemento, isso causará um empate e ninguém irá pontuar na rodada, então o jogador que foi o primeiro a jogar na rodada anterior será o primeiro a jogar novamente.
+                    <br />
+                    Divirta-se!!!</p>
+            </div>
+
+            <div id="modal-devs" class="modal-div">
+                <img onclick="closeModal('modal-devs')" id="devs-close" src="./board-assets/close_white_24dp.svg">
+                <h2>Nossos Desenvolvedores</h2>
+                <table id="social-media">
+                    <tbody>
+                        <tr>
+                            <td>Fabrício Rodrigues</td>
+                            <td>
+                                <a href="https://www.linkedin.com/in/fabr%C3%ADcio-rodrigues-pereira-68b844227/" target="_blank"><img class="linkedin-logo" src="./board-assets/linkedin.png"> Linkedin</a>
+                                <br />
+                                <a href="https://github.com/SkyvengerLL" target="_blank"><img class="linkedin-logo" src="./board-assets/github.png"> GitHub</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Fernando Ribeiro</td>
+                            <td>
+                                <a href="https://www.linkedin.com/in/fernando-ribeiro-b28342143/" target="_blank"><img class="linkedin-logo" src="./board-assets/linkedin.png"> Linkedin</a>
+                                <br />
+                                <a href="https://github.com/Ferr50" target="_blank"><img class="linkedin-logo" src="./board-assets/github.png"> GitHub</a>
+                            </td>
+                        <tr>
+                            <td>Flávia Souza</td>
+                            <td>
+                                <a href="https://www.linkedin.com/in/ridailda/" target="_blank"><img class="linkedin-logo" src="./board-assets/linkedin.png"> Linkedin</a>
+                                <br />
+                                <a href="https://github.com/flaaaaaavis" target="_blank"><img class="linkedin-logo" src="./board-assets/github.png"> GitHub</a>
+                            </td>
+                        <tr>
+                            <td>José Neto</td>
+                            <td>
+                                <!-- <a href="" target="_blank"><img class="linkedin-logo" src="./board-assets/linkedin.png"> Linkedin</a>
+                                <br /> -->
+                                <a href="https://github.com/Jo-Neto" target="_blank"><img class="linkedin-logo" src="./board-assets/github.png"> GitHub</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Vinícius Noronha</td>
+                            <td>
+                                <a href="https://www.linkedin.com/in/vinicius-noronha-1540b2184/" target="_blank"><img class="linkedin-logo" src="./board-assets/linkedin.png"> Linkedin</a>
+                                <br />
+                                <a href="https://github.com/viniciusna" target="_blank"><img class="linkedin-logo"  src="./board-assets/github.png"> GitHub</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <nav id="help" class="modal-div" onclick="closeModal('help')">
+            <p>REGRAS</p>
+            <img class="diagram-rules" src="./board-assets/diagram.svg" alt="">
+        </nav>
+
+    </body>
+</html>

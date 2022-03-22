@@ -1,0 +1,61 @@
+header {
+    width: 100vw;
+    height: 7vh;
+
+    display: flex;
+    justify-content: space-between;
+}
+
+#header-buttons {
+        width: 12vw;
+        height: 100%;
+        margin-left: 1vw;
+
+        display: flex;
+        flex-direction: row;
+        justify-content: space-evenly;
+        align-items: center;
+}
+
+#btn-menu-in, #btn-menu-out, #btn-sound, #btn-guide, #btn-help {
+    cursor: pointer;
+}
+
+#btn-menu-in, #btn-sound, #btn-guide, #btn-help {
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0.2) 32.81%, rgba(0, 0, 0, 0) 100%), linear-gradient(180deg, rgba(219, 28, 28) 0%, rgba(233, 21, 21) 100%);
+    border-radius: 25px;
+    padding: 6px;
+}
+
+#right-side{
+    width: 70vw;
+    display: flex;
+    flex-direction: row;
+    justify-content: end;
+}
+
+#btn-help {
+    position: absolute;
+    height: calc(7vh - 10px);
+    right: 20px;
+    bottom: 20px;
+}
+
+#game-score {
+    width: 55vw;
+    min-width: 250px;
+    height: 7vh;
+    position: absolute;
+    color: #f5f5f5;
+    font-size: 22px;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    padding: 0 20px;
+
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0.2) 32.81%, rgba(0, 0, 0, 0) 100%), linear-gradient(180deg, rgba(219, 28, 28) 0%, rgba(233, 21, 21) 100%);
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 0px 0px 0px 30px;
+}
