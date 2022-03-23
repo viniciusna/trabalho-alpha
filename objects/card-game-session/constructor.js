@@ -20,12 +20,12 @@ class CardGameSession {
          scoreP1: 0,
          scoreP2: 0
       };
-      /*
+      
       this.serverSide = { //for database statistics
          hasGivenUp: false,
          disconnec: false,
          hasCheated: false
-      };*/
+      };
       
       this.player1 = {  //server side only, data about player 1
          regID: null,

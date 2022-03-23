@@ -9,8 +9,6 @@ function usrReg(data, res) {
     let db = JSON.parse(fs.readFileSync('./database/users.json'));
     let lowName = data.name.toLowerCase();
     let lowEmail = data.email.toLowerCase();
-
-    //TODO: weird character limitation
     
     let unavailable = db.some( el => {
         
@@ -37,7 +35,6 @@ function usrReg(data, res) {
     else 
         return false;
 
-    //TODO: password limitations
 }
 
 module.exports = usrReg;
