@@ -30,6 +30,7 @@ class CardGameSession {
       this.player1 = {  //server side only, data about player 1
          regID: null,
          reconKey: null,
+         timer: 8,
          hand: [],
          deck: null,
          ws: wsP1  //CAREFULL WITH RECONNECTIONS!!!
@@ -38,6 +39,7 @@ class CardGameSession {
       this.player2 = {  //server side only, data about player 2
          regID: null,
          reconKey: null,
+         timer: 8,
          hand: [],
          deck: null,
          ws: wsP2 //CAREFULL WITH RECONNECTIONS!!!
@@ -48,7 +50,13 @@ class CardGameSession {
       
       this.player1.hand = this.player1.deck.splice(0, 3); //get 3 cards from deck and gives to player hand
       this.player2.hand = this.player2.deck.splice(0, 3); 
-   
+
+      this.player1.ws.lineTimer = null;
+      this.player2.ws.lineTimer = null;
+      
+      this.player1.ws.waitingLine = false;
+      this.player2.ws.waitingLine = false;
+
    }
 }
 

@@ -7,6 +7,7 @@ function wsClose(ws) { //connection was closed
 
     ws.isAlive = false;
     ws.terminate(); //safety
+    
 }
 
 module.exports = {

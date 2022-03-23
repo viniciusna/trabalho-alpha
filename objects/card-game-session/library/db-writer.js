@@ -5,18 +5,20 @@ const fs = require('fs');
 
 //function stores session on database and sends message to players who have an OPEN socket
 
-module.exports = function (Session, winner) { //IMPORTANT, ONLY ACCEPTS 'draw', 'p1' OR 'p2' STRING TYPES, LOWERCASE
+module.exports = function (Session, winner, isDc = false) { //IMPORTANT, ONLY ACCEPTS 'draw', 'p1' OR 'p2' STRING TYPES, LOWERCASE
     
-    if (Session.player1.ws.readyState === 1)
+    if (Session.player1.ws.readyState === 1) 
         Session.player1.ws.send(JSON.stringify(Session.gameState));
     
-    if (Session.player2.ws.readyState === 1)
+    if (Session.player2.ws.readyState === 1) 
         Session.player2.ws.send(JSON.stringify(Session.gameState));
     
     if (winner === 'p1') {  
         if (Session.player1.ws.readyState === 1)    
             Session.player1.ws.send("Voce ganhou!");
-        if (Session.player2.ws.readyState === 1)
+        if (isDc)
+            Session.player1.ws.close(4001, "O seu oponente desconectou");
+        else if (Session.player2.ws.readyState === 1)
             Session.player2.ws.send("Voce perdeu");
         //TODO: check account and give points
     } 
@@ -24,17 +26,19 @@ module.exports = function (Session, winner) { //IMPORTANT, ONLY ACCEPTS 'draw', 
     else if (winner === 'p2') {
         if (Session.player1.ws.readyState === 1)
             Session.player1.ws.send("Voce perdeu");
-        if (Session.player2.ws.readyState === 1)
+        if (isDc)
+            Session.player2.ws.close(4001, "O seu oponente desconectou");
+        else if (Session.player2.ws.readyState === 1)
             Session.player2.ws.send("Voce ganhou!");
         //TODO: check account and give points
-    } 
+    }
     
     else if (winner === 'draw') {
         if (Session.player1.ws.readyState === 1) 
             Session.player1.ws.send("Empate!");
         if (Session.player2.ws.readyState === 1)
             Session.player2.ws.send("Empate!");
-    } 
+    }
 
 
     
@@ -68,7 +72,7 @@ module.exports = function (Session, winner) { //IMPORTANT, ONLY ACCEPTS 'draw', 
                 account: Session.player2.account,
             },
             turnNum: Session.gameState.turnNum,
-            disconnec: Session.serverSide.disconnec,
+            disconnec: Session.serverSide.isDc,
             hasGivenUp: Session.serverSide.hasGivenUp,
             hasCheated: Session.serverSide.hasCheated
         });

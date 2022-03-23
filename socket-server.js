@@ -7,6 +7,8 @@ const wsStartModule = require('./server-modules/websocket/ws-start.js');
 const wsMsgModule = require('./server-modules/websocket/ws-message.js');
 const wsCloseModule = require('./server-modules/websocket/ws-close.js');
 
+const dcTimerMod = require('./objects/card-game-session/library/dc-timer.js');
+
 
 const wss = new WebSocket.Server({
     noServer: true,  //server-less socket server
@@ -30,12 +32,44 @@ wss.on('connection', (ws, req) => {
     ws.on('pong', () => { ws.isAlive = true }); //on pong, we are sure socket is alive
     ws.on('close', () => wsCloseModule.close(ws));
     
-    wsStartModule(ws, req); //run this function before setting socket up to exchange messages
+    wsStartModule.wsStart(ws, req); //run this function before setting socket up to exchange messages
     
     ws.on('message', (data, isBinary) => wsMsgModule.msg(data, isBinary, ws));
 });
 
-//TODO: ping broadcast and afk timer for current player turn
+const wssTimer = setInterval(function ping() {
+  
+  wss.clients.forEach( ws => {
+    if (ws.isAlive === false)
+      ws.terminate();
+        
+    ws.isAlive = false;
+    ws.ping();
+  });
+
+}, 50000);
+
+const lineTimer = setInterval( () => {
+  wsStartModule.waitSockArr.forEach( ws => {
+    if (ws.isAlive === false)
+      ws.terminate();
+
+    else {
+      if (ws.lineTimer === 0) {
+        ws.close(4002, "Não há outros players no momento");
+        ws.terminate();
+      }
+
+      else if (ws.waitingLine)
+        ws.lineTimer--;
+      
+      ws.isAlive = false;
+      ws.ping();
+    }
+  });
+}, 10000);
+
+const dcTimer = setInterval( dcTimerMod, 10000);
 
 //exporting the server
 module.exports = wss;

@@ -5,15 +5,17 @@ const waitSockArr = [];  //store sockets waiting for other players
 
 function wsStart(ws, req) {
 
+    console.log(req.session);
     console.log(req.sessionID);
-
-    ws.reconKey = req.session.reconKey; //put session data into socket
+    
+    ws.reconKey = req.sessionID; //put session data into socket
     ws.isAlive = true; //assures the connection is alive, set to true on pong, set to false on timer
-    ws.timeout = 10;  //gives a timer to close AFK players
-
+    
     if (reconnecChecker(ws))
         return;
 
+    ws.waitingLine = true; //don't let player on the waiting line for too long, if this is true, timer is also triggered
+    ws.lineTimer = 10;
     waitSockArr.push(ws); //goes to end of waiting line and...
     waitLineChecker();  //is passed to the function below
 
@@ -51,8 +53,6 @@ function waitLineChecker() {
     } else
         return; //keep waiting
 }
-
-module.exports = wsStart;
 
 
 
@@ -109,7 +109,7 @@ function prepareSocket(playerSymbol, sID) {
     if (Active.sessArr[sID][playerSymbol].ws.readyState === 1) { //don't send messages to closed sockets
         Active.sessArr[sID][playerSymbol].ws.send(JSON.stringify(Active.sessArr[sID][playerSymbol].hand)); //send game info to player
         Active.sessArr[sID][playerSymbol].ws.send(JSON.stringify(Active.sessArr[sID].gameState));
-    } else {
+    } else {wsStartModule
         if (playerSymbol === 'player1')
             Active.sessArr[sID].player2.ws.send("O oponente desconectou antes do inicio da partida");
         else
@@ -118,4 +118,11 @@ function prepareSocket(playerSymbol, sID) {
 
     Active.sessArr[sID][playerSymbol].ws.aID = sID; //assign the sockets the access index for faster performance
 
+}
+
+
+
+module.exports = {
+    wsStart: wsStart,
+    waitSockArr: waitSockArr
 }

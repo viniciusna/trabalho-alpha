@@ -6,9 +6,18 @@ const storeUsr = require('./db-writer.js');
 
 function usrReg(data, res) {
     
-    let db = JSON.parse(fs.readFileSync('./database/users.json'));
-    let lowName = data.name.toLowerCase();
-    let lowEmail = data.email.toLowerCase();
+    let pData;
+    try {
+        pData = JSON.parse(data);
+    } catch (err){
+        console.log(error);
+        res.send("error");
+        return;
+    }
+    
+    let db = JSON.parse(fs.readFileSync('./pDatabase/users.json'));
+    let lowName = pData.name.toLowerCase();
+    let lowEmail = pData.email.toLowerCase();
     
     let unavailable = db.some( el => {
         
@@ -28,8 +37,8 @@ function usrReg(data, res) {
     });
 
     if (!unavailable) {
-        storeUsr(new User(data.name, data.email, data.password), true);
-        res.send("Conta registrada, bem vindo "+data.name+" !");
+        storeUsr(new User(pData.name, pData.email, pData.password), true);
+        res.send("Conta registrada, bem vindo "+pData.name+" !");
         return true;
     }
     else 
