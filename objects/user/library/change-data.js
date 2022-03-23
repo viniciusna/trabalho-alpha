@@ -9,8 +9,17 @@ function userChange(data, res, isDelete = false) {
     
     let pFile = JSON.parse(uFile);
 
+    let pData;
+    try {
+        pData = JSON.parse(data);
+    } catch (err){
+        console.log(err);
+        res.send("error");
+        return;
+    }
+
     let userIndex = pFile.findIndex(user => {
-        return (data.id === user.name || data.id === user.email);
+        return (pData.id === user.name || pData.id === user.email);
     });
 
     if (userIndex === -1) {  //user not found
@@ -19,7 +28,7 @@ function userChange(data, res, isDelete = false) {
     }
 
     else {
-        let hash = crypto.pbkdf2Sync(data.password, pFile[userIndex].salt, 2048, 128, `sha512`).toString(`hex`);
+        let hash = crypto.pbkdf2Sync(pData.password, pFile[userIndex].salt, 2048, 128, `sha512`).toString(`hex`);
 
         if (pFile[userIndex].hash === hash) {
 
@@ -28,9 +37,9 @@ function userChange(data, res, isDelete = false) {
             dbChanger({
                 id: pFile[userIndex].id,
                 active: !isDelete, //if isDelete variable is true, set user to disabled status
-                email: data.newEmail,
+                email: pData.newEmail,
                 salt: newSalt, //use new SALT
-                hash: crypto.pbkdf2Sync(data.newPassword, newSalt, 2048, 128, `sha512`).toString(`hex`)
+                hash: crypto.pbkdf2Sync(pData.newPassword, newSalt, 2048, 128, `sha512`).toString(`hex`)
             }, false);
 
             if (isDelete)

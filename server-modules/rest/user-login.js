@@ -2,14 +2,14 @@ const crypto = require('crypto');
 const fs = require('fs');
 
 
-function userLogin(req, res) {  //safety
+function userLogin(data, res) {  //safety
 
     let uFile = fs.readFileSync('./database/users.json'); 
     let pFile = JSON.parse(uFile);
     let pBody;
 
     try {
-        pBody = JSON.parse(req.body);
+        pBody = JSON.parse(data);
     } catch (err){
         console.log(err);
         res.send("error");
