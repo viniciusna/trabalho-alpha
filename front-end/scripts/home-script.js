@@ -39,13 +39,13 @@ document.getElementById('play-now-button').addEventListener('click', () => {
                 url: `/board1`,
                 dataType: "script",
                 complete: callBoard2()
-            });
-    
+            })
+
             function callBoard2() {
               $.ajax({
                 url: `/board2`,
                 dataType: "script"
-              });
+              })
             }
 
             console.log(obj)
@@ -139,10 +139,6 @@ function register() {
         const userEmail = $("#input-player-email").val()
         const userpw = $("#input-player-password").val()
 
-        console.log("email: " + userEmail)
-        console.log("user: " + username)
-        console.log("pw: " + userpw)
-
         fetch('http://localhost/register/', {
             method: 'POST',
             body: JSON.stringify({
@@ -153,7 +149,8 @@ function register() {
             headers: {
                 'content-type': 'application/json'
             }
-        }).then( resp => {
+        }).then( resp => resp.text() )
+        .then( resp => {
             $("#modal-sign-up").html(resp)
             $("#modal-sign-up").append(`<button type="button" id="cancel-button" onclick="closeModalHome('modal-sign-up')">Ok</button>`)
         })
@@ -164,12 +161,9 @@ function register() {
 }
 
 function login() {
-    if ( $("#input-player-email").val().length >= 3 & $("#input-player-name").val().length >= 3 & $("#input-player-password").val().length >= 3 ) {
+    if ( $("#input-player-name-login").val().length >= 3 & $("#input-player-password-login").val().length >= 3 ) {
         const username = $("#input-player-name-login").val()
         const userpw = $("#input-player-password-login").val()
-
-        console.log("user: " + username)
-        console.log("pw: " + userpw)
 
         fetch('http://localhost/login/', {
             method: 'POST',

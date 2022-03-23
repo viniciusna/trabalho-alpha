@@ -8,17 +8,29 @@ $(document).ready( () => {
     })
 
     if ( youStart ) {
-        openModal('modal-initial')
+        openModalBoard('modal-initial')
         $("#description-modal-initial").text('É sua vez de jogar')
         isMyTurn = true
         turnControlAndPlayCard()
         greenShine()
     } else {
-        openModal('modal-initial')
+        openModalBoard('modal-initial')
         $("#description-modal-initial").text('É a vez do oponente jogar, aguarde')
         redShine()
     }
 })
+
+function openModalBoard(modalId) {
+    const container = document.getElementById('container-modais');
+    container.style.visibility = "visible";
+
+    $('body').css('overflowY', "hidden");
+
+    $('.modal-div').css('visibility', 'hidden');
+
+    const modal = document.getElementById(modalId);
+    modal.style.visibility = "visible";
+}
 
 function greenShine() {
     $("#container-first-hand-card").attr("class", "container-cards-from-hand card green-shine")
@@ -96,19 +108,19 @@ socket.onclose = (event) => {
     if ( gameState.turnNum == 18 ) {
         if ( gameState.scoreP1 === gameState.scoreP2 ) {
             $("#description-modal").text("Empate!")
-            openModal("modal-general")
+            openModalBoard("modal-general")
         } else if ( whichPlayer === "p1" && gameState.scoreP1 > gameState.scoreP2 ) {
             $("#description-modal").text("Você venceu!")
-            openModal("modal-general")
+            openModalBoard("modal-general")
         } else if ( whichPlayer === "p1" && gameState.scoreP1 < gameState.scoreP2 ) {
             $("#description-modal").text("Você perdeu!")
-            openModal("modal-general")
+            openModalBoard("modal-general")
         } else if ( whichPlayer === "p2" && gameState.scoreP1 < gameState.scoreP2 ) {
             $("#description-modal").text("Você venceu!")
-            openModal("modal-general")
+            openModalBoard("modal-general")
         } else if ( whichPlayer === "p2" && gameState.scoreP1 > gameState.scoreP2 ) {
             $("#description-modal").text("Você perdeu!")
-            openModal("modal-general")
+            openModalBoard("modal-general")
         }
     }
 }
@@ -249,25 +261,25 @@ function finishTheMatch(scoreP1, scoreP2) {
             $("#score-player1").text(scoreP1)
             $("#score-player2").text(scoreP2)
             $("#description-modal").text("Você perdeu!")
-            openModal("modal-general")
+            openModalBoard("modal-general")
             loserSound.play();
         } else if ( scoreP2 === 5 && whichPlayer === "p1" ) {
             $("#score-player1").text(scoreP1)
             $("#score-player2").text(scoreP2)
             $("#description-modal").text("Você perdeu!")
-            openModal("modal-general")
+            openModalBoard("modal-general")
             loserSound.play();
         } else if ( scoreP1 === 5 && whichPlayer === "p1" ) {
             $("#score-player1").text(scoreP1)
             $("#score-player2").text(scoreP2)
             $("#description-modal").text("Você venceu!")
-            openModal("modal-general")
+            openModalBoard("modal-general")
             winnerSound.play();
         } else if ( scoreP2 === 5 && whichPlayer === "p2" ) {
             $("#score-player1").text(scoreP1)
             $("#score-player2").text(scoreP2)
             $("#description-modal").text("Você venceu!")
-            openModal("modal-general")
+            openModalBoard("modal-general")
             winnerSound.play();
         }
     }, 3500)
