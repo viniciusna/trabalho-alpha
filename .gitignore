@@ -1,7 +1,8 @@
 #package.json will be manually controlled
-**/package.json/**
-package.json
-**/package-lock.json
+#**/package.json/**
+#package.json
+#**/package-lock.json
+**/node_modules
 **/node_modules/**
 node_modules/**
 node_modules/
@@ -114,5 +115,3 @@ dist
 
 # TernJS port file
 .tern-port
-
-**/node_modules

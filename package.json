@@ -1,0 +1,42 @@
+{
+  "name": "v0.1-non-modular",
+  "version": "0.1.0",
+  "description": "first version of the app",
+  "main": "server.js",
+  "scripts": {
+    "test": "testcmd",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Jo-Neto/Challenge1-Lovelace-group4.git"
+  },
+  "keywords": [
+    "lovelace",
+    "challenge",
+    "desafio",
+    "first",
+    "jogo",
+    "game",
+    "12",
+    "yeard",
+    "old",
+    "infantil",
+    "child",
+    "simple",
+    "training"
+  ],
+  "author": "fabricio, fernando, flavia, neto, vinicius",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Jo-Neto/Challenge1-Lovelace-group4/issues"
+  },
+  "homepage": "https://github.com/Jo-Neto/Challenge1-Lovelace-group4#readme",
+  "dependencies": {
+    "crypto": "^1.0.1",
+    "express": "^4.17.3",
+    "express-session": "^1.17.2",
+    "fs": "^0.0.1-security",
+    "ws": "^8.5.0"
+  }
+}
