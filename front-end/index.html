@@ -31,14 +31,17 @@
                     <input type="password" id="input-player-password-login" placeholder="Senha">
                 </div>
                 <div id="response-msg-server"></div>
-                <br />
-                <button type="button" id="login-button" onclick="login()">Login</button>
-                <div>
+                <br />                
+                <div id="btn-user">
                     <button type="button" id="play-now-button" onclick="openModalHome('modal-loading')">Jogar agora</button>
-                    <button type="button" id="sign-up-button" onclick="openModalHome('modal-sign-up')">Cadastre-se</button>
+                    <button type="button" id="login-button" onclick="login()">Login</button>
                 </div>
+                <div id="link-sign-up">
+                    <a type="button" id="sign-up-button" onclick="openModalHome('modal-sign-up')">Cadastre-se</a>
+                </div>
+
+                <p id="roll">Role para baixo para ver as regras</p>
             </div>
-            <p>Role para baixo para ver as regras</p>
         </main>
  
         <section id="info-section"> <!-- ------Informações sobre o jogo e suas regras------ -->
