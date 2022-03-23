@@ -5,8 +5,6 @@ const SessionArr = [];  //store ACTIVE game sessions, inactive game sessions go 
 
 function message(data, isBinary, ws) {
 
-    ws.timeout = 10; //reset afk timer
-
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //+------------------------------------------------------------------+
     //|                      READING IF MSG IS VALID                     | 
@@ -31,6 +29,8 @@ function message(data, isBinary, ws) {
     //+------------------------------------------------------------------+ 
     if (SessionArr[ws.aID].player1.ws === ws) { //player 1 msg  
 
+        SessionArr[ws.aID].player1.ws.timer = 12; //reset afk timer
+        
         if (!SessionArr[ws.aID].gameState.player1turn) //not p1 turn
             return;
 
@@ -52,6 +52,8 @@ function message(data, isBinary, ws) {
 
     else if (SessionArr[ws.aID].player2.ws === ws) { //player 2 msg
 
+        SessionArr[ws.aID].player2.ws.timer = 12; //reset afk timer
+        
         if (SessionArr[ws.aID].gameState.player1turn)  //not p2 turn
             return;
 

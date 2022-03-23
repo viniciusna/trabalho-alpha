@@ -5,13 +5,21 @@ const fs = require('fs');
 function userLogin(req, res) {  //safety
 
     let uFile = fs.readFileSync('./database/users.json');
-    let pFile = JSON.parse(uFile);
+    let pFile;
+
+    try {
+        pFile = JSON.parse(uFile);
+    } catch (err){
+        console.log(error);
+        res.send("error");
+        return;
+    }
 
     let userIndex = pFile.findIndex(user => {
         return (req.body.id === user.name || req.body.id === user.email);
     });
 
-    if (userIndex === -1) {  //usuario nao encontrado
+    if (userIndex === -1) {  //user not found
         res.send("Usuário e/ou senha invalida");
         return false;
     }
@@ -24,6 +32,7 @@ function userLogin(req, res) {  //safety
             if (pFile[userIndex].active = false)
                 res.send("Esta conta foi deletada");
             else {
+                //TODO: name on user browser
                 req.session.regID = pFile[userIndex].id;
                 req.session.usrName = pFile[userIndex].name;
                 req.session.cookie.expires = 86400000; //log-in lasts 24 hours
@@ -31,7 +40,7 @@ function userLogin(req, res) {  //safety
             }
         }
 
-        else { //senha errada
+        else { //wrong password
             res.send("Usuário e/ou senha invalida");
         }
         return true;

@@ -202,6 +202,15 @@ module.exports = function (Session) {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //+------------------------------------------------------------------+
+    //|             ATTRIBUTE TURN TO SOCKET FOR TIMER                   |
+    //+------------------------------------------------------------------+
+    Session.player1.ws.myTurn = Session.gameState.player1turn;
+    Session.player2.ws.myTurn = !Session.gameState.player1turn;
+
+
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //+------------------------------------------------------------------+
     //|                    CHECKING IF GAME IS OVER                      |
     //+------------------------------------------------------------------+
   
@@ -230,7 +239,7 @@ module.exports = function (Session) {
     if (Session.player1.ws.readyState === 1)
         Session.player1.ws.send(JSON.stringify(Session.gameState)); //send game state after calculations
     if (Session.player2.ws.readyState === 1)
-        Session.player2.ws.send(JSON.stringify(Session.gameState));
+        Session.player2.ws.send(JSON.stringify(Session.gameState));    
 
     Session.isLocked = false;  //safety unlock
 

@@ -6,13 +6,21 @@ const dbChanger = require('./db-writer.js');
 function userChange(data, res, isDelete = false) {
 
     let uFile = fs.readFileSync('./database/users.json');
-    let pFile = JSON.parse(uFile);
+    
+    let pFile;
+    try {
+        pFile = JSON.parse(uFile);
+    } catch (err){
+        console.log(error);
+        res.send("error");
+        return;
+    }
 
     let userIndex = pFile.findIndex(user => {
         return (data.id === user.name || data.id === user.email);
     });
 
-    if (userIndex === -1) {  //usuario nao encontrado
+    if (userIndex === -1) {  //user not found
         res.send("Usuário e/ou senha invalida");
         return false;
     }
@@ -38,7 +46,7 @@ function userChange(data, res, isDelete = false) {
                 res.send("Dados Alterados");
         
         }
-        else //senha errada
+        else //wrong pwd
             res.send("Usuário e/ou senha invalida");
     }
 

@@ -35,8 +35,6 @@ app.patch('/patch', (req, res) => userChange(req.body, res, false)); //change ac
 
 app.post('/register', (req, res) => usrReg(req.body, res)); //register
 
-//TODO: unparseable data protection
-
 //+-----------------------------------------------------------------------------------------------+
 //+-----------------------------------------------------------------------------------------------+
 
