@@ -47,7 +47,7 @@ section img {
     margin: 20px 0;
 }
 
-#play-now-button, #sign-up-button {
+#play-now-button, #login-button {
     background: #232323;
     color: #f5f5f5;
     border: none;
@@ -72,6 +72,24 @@ section img {
     margin-bottom: 5vh;
     cursor: pointer;
 
+}
+
+#btn-user {
+    height: 40px;
+}
+
+#link-sign-up {
+    position: relative;
+    left: 160px;
+    text-decoration: underline;
+    cursor: pointer;
+    color: rgb(43, 176, 253);
+}
+
+#roll {
+    position: relative;
+    margin-top: 10px;
+    left: 23px;
 }
 
 #image-logo {
