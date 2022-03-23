@@ -26,10 +26,10 @@ module.exports = function (Session, winner, isDc = false) { //IMPORTANT, ONLY AC
     else if (winner === 'p2') {
         if (Session.player1.ws.readyState === 1)
             Session.player1.ws.send("Voce perdeu");
+        if (Session.player2.ws.readyState === 1)
+            Session.player2.ws.send("Voce ganhou!");
         if (isDc)
             Session.player2.ws.close(4001, "O seu oponente desconectou");
-        else if (Session.player2.ws.readyState === 1)
-            Session.player2.ws.send("Voce ganhou!");
         //TODO: check account and give points
     }
     

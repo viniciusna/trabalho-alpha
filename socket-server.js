@@ -37,7 +37,7 @@ wss.on('connection', (ws, req) => {
     ws.on('message', (data, isBinary) => wsMsgModule.msg(data, isBinary, ws));
 });
 
-const wssTimer = setInterval(function ping() {
+const wssTimer = setInterval( () => {
   
   wss.clients.forEach( ws => {
     if (ws.isAlive === false)
