@@ -10,8 +10,7 @@ module.exports = function (Session) {
 
     Session.isLocked = true; //safety lock. function unlocked at the end
 
-    console.log("round check passed");
-    console.log(Session.gameState);
+
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //+-------------------------------------------------------------------+
@@ -20,12 +19,14 @@ module.exports = function (Session) {
     if ((Session.gameState.board[0] === '' || Session.gameState.board[1] === '') //either player haven't played but...
         &&
         (Session.gameState.board[0] !== Session.gameState.board[1])) {   //both of'em haven't played
+        
         if (Session.gameState.board[0] === '') { //only p2 played
             Session.gameState.player1turn = true;
         } else if (Session.gameState.board[1] === '') { //only p1 played
             Session.gameState.player1turn = false;
-        } else
-            console.log("CardGameSession object --> roundcheck(fn), logical error, on passing turn(first check), Session Num: " + Session.gameState.sID);
+        } 
+        
+        
         if (Session.player1.ws.readyState === 1)
             Session.player1.ws.send(JSON.stringify(Session.gameState)); //update board for both players
         
@@ -34,8 +35,8 @@ module.exports = function (Session) {
         
             Session.isLocked = false;  //safety unlock
         return;
+    
     }
-    console.log("round check passed 1");
 
 
     if (Session.player1.ws.readyState === 1)
@@ -52,7 +53,6 @@ module.exports = function (Session) {
         if (Session.gameState.board[0] !== 'd') //if its not dark matter draw
             Session.gameState.player1turn = !Session.gameState.player1turn; //keep order 
     
-    console.log("round check passed 2");
 
 
     switch (Session.gameState.board[0]) {
@@ -198,7 +198,7 @@ module.exports = function (Session) {
             break;
     }
 
-    console.log("round check passed 3");
+
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //+------------------------------------------------------------------+
@@ -215,7 +215,7 @@ module.exports = function (Session) {
         dbStore(Session, 'draw');
         return true;
     }
-    console.log("round check passed 4");
+
 
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -233,9 +233,7 @@ module.exports = function (Session) {
         Session.player2.ws.send(JSON.stringify(Session.gameState));
 
     Session.isLocked = false;  //safety unlock
-    console.log("round check passed 5");
 
-    console.log(Session.gameState);
 }
 
 exports.roundChecker;

@@ -25,6 +25,7 @@ function userLogin(req, res) {  //safety
                 res.send("Esta conta foi deletada");
             else {
                 req.session.regID = pFile[userIndex].id;
+                req.session.usrName = pFile[userIndex].name;
                 req.session.cookie.expires = 86400000; //log-in lasts 24 hours
                 res.send("Bem vindo " + pFile[userIndex].name);
             }

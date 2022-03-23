@@ -35,6 +35,8 @@ app.patch('/patch', (req, res) => userChange(req.body, res, false)); //change ac
 
 app.post('/register', (req, res) => usrReg(req.body, res)); //register
 
+//TODO: unparseable data protection
+
 //+-----------------------------------------------------------------------------------------------+
 //+-----------------------------------------------------------------------------------------------+
 
@@ -65,14 +67,11 @@ app.use('/leader', express.static('front-end/scripts/leader-script.js'));
 const wss = require('./socket-server.js');
 
 HTTPserver.on('upgrade', (request, socket, head) => {  
-   sessionMW( request, {}, () => {  
-      
-      if (!request.session.reconKey)
-         request.session.reconKey = crypto.randomUUID();
-
+   
+   sessionMW( request, {}, () => {
       wss.handleUpgrade(request, socket, head, (ws, request) => {
          wss.emit('connection', ws, request);
       });
-
    });   
+
 });
