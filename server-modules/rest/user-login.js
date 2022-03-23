@@ -4,19 +4,20 @@ const fs = require('fs');
 
 function userLogin(req, res) {  //safety
 
-    let uFile = fs.readFileSync('./database/users.json');
-    let pFile;
+    let uFile = fs.readFileSync('./database/users.json'); 
+    let pFile = JSON.parse(uFile);
+    let pBody;
 
     try {
-        pFile = JSON.parse(uFile);
+        pBody = JSON.parse(req.body);
     } catch (err){
-        console.log(error);
+        console.log(err);
         res.send("error");
         return;
     }
 
     let userIndex = pFile.findIndex(user => {
-        return (req.body.id === user.name || req.body.id === user.email);
+        return (pBody.id === user.name || pBody.id === user.email);
     });
 
     if (userIndex === -1) {  //user not found
@@ -26,7 +27,7 @@ function userLogin(req, res) {  //safety
 
     else {
       
-        let hash = crypto.pbkdf2Sync(req.body.password, pFile[userIndex].salt, 2048, 128, `sha512`).toString(`hex`);
+        let hash = crypto.pbkdf2Sync(pBody.password, pFile[userIndex].salt, 2048, 128, `sha512`).toString(`hex`);
 
         if (pFile[userIndex].hash === hash) {
             if (pFile[userIndex].active = false)

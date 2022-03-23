@@ -10,8 +10,6 @@ module.exports = function (User, isNewUser) {
         if (err) { console.log("ERROR: User ID: " + User.id + "on reading database: "); throw console.log(err); }
         
         let dataBase = JSON.parse(readData);
-
-        console.log(User);
         
         if (isNewUser)
             dataBase.push(User);

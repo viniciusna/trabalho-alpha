@@ -7,7 +7,7 @@ module.exports = session({
     secret: secret,
     cookie: {
         maxAge: 3600000, // 1 hour
-        httpOnly: true,
+        httpOnly: false,
         secure: false, // Requires https connection
     },
     resave: false,

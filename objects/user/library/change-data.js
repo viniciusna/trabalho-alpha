@@ -7,14 +7,7 @@ function userChange(data, res, isDelete = false) {
 
     let uFile = fs.readFileSync('./database/users.json');
     
-    let pFile;
-    try {
-        pFile = JSON.parse(uFile);
-    } catch (err){
-        console.log(error);
-        res.send("error");
-        return;
-    }
+    let pFile = JSON.parse(uFile);
 
     let userIndex = pFile.findIndex(user => {
         return (data.id === user.name || data.id === user.email);

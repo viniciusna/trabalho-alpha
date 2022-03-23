@@ -30,10 +30,10 @@ const HTTPserver = app.listen(frontPort, () => { console.log(`App listening on p
 const usrReg = require('./objects/user/library/register.js');
 const userChange = require('./objects/user/library/change-data.js');
 
-app.delete('/delete', (req, res) => userChange(req.body, res, true)); //delete account
-app.patch('/patch', (req, res) => userChange(req.body, res, false)); //change account properties
+app.delete('/delete', (req, res) => userChange(req, res, true)); //delete account
+app.patch('/patch', (req, res) => userChange(req, res, false)); //change account properties
 
-app.post('/register', (req, res) => usrReg(req.body, res)); //register
+app.post('/register', (req, res) => usrReg(req, res)); //register
 
 //+-----------------------------------------------------------------------------------------------+
 //+-----------------------------------------------------------------------------------------------+
