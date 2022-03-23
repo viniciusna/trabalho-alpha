@@ -10,7 +10,7 @@ function usrReg(data, res) {
     try {
         pData = JSON.parse(data);
     } catch (err){
-        console.log(error);
+        console.log(err);
         res.send("error");
         return;
     }
