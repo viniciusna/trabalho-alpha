@@ -14,6 +14,7 @@ class CardGameSession {
       this.aID = null,  //access ID, used for o(1) access to socket game
       
       this.gameState = {
+         matchID: sID,
          turnNum: 1,  
          player1turn: Boolean(Math.round(Math.random())), // randomized true or false, who plays first
          board: ['', ''], // [player1, player2]
@@ -56,6 +57,8 @@ class CardGameSession {
       
       this.player1.ws.waitingLine = false;
       this.player2.ws.waitingLine = false;
+
+      console.log("new session created");
 
    }
 }

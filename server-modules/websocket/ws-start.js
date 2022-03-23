@@ -4,9 +4,6 @@ const Active = require('./ws-message.js');  //imports active game sessions array
 const waitSockArr = [];  //store sockets waiting for other players
 
 function wsStart(ws, req) {
-
-    console.log(req.session);
-    console.log(req.sessionID);
     
     ws.reconKey = req.sessionID; //put session data into socket
     ws.isAlive = true; //assures the connection is alive, set to true on pong, set to false on timer
@@ -23,6 +20,8 @@ function wsStart(ws, req) {
 
 function waitLineChecker() {
     if (waitSockArr.length >= 2) { //2 or more players, create a match
+        
+        console.log("waitLineChecker --> creating match");
         
         Active.gameArr.push(waitSockArr.shift(), waitSockArr.shift()); //puts first 2 players on the line into the end of the game socket array
 
@@ -50,13 +49,17 @@ function waitLineChecker() {
 
         waitLineChecker(); //try again in case there's more players
 
-    } else
+    } else {
+        console.log("waitLineChecker --> only 1 player in line");
         return; //keep waiting
+    }
 }
 
 
 
 function reconnecChecker(ws) {
+    
+    console.log("reconnecChecker");
     
     if (ws.readyState === 0) //quick fix, probably a bad idea
         reconnecChecker(ws);
@@ -65,25 +68,27 @@ function reconnecChecker(ws) {
     Active.sessArr.forEach( session => {
         
         if (session.player1.reconKey = ws.reconKey) {   
+            console.log("p1 reconnect");
             session.player1.ws = ws;  //re-assing socket 
             if (session.player1.ws.readyState === 1) { //don't send messages to closed sockets
                 ws.send(JSON.stringify('p1'));
                 ws.send(JSON.stringify(session.player1.hand)); //send game info to player
                 ws.send(JSON.stringify(session.gameState));
                 Active.gameArr.push(ws);
+                return true; 
             }
-            return true; 
         }
         
         else if (session.player2.reconKey = ws.reconKey) {          
+            console.log("p2 reconnect");
             session.player2.ws = ws;  //re-assing socket
             if (session.player2.ws.readyState === 1) { //don't send messages to closed sockets
                 ws.send(JSON.stringify('p2'));
                 ws.send(JSON.stringify(session.player2.hand)); //send game info to player
                 ws.send(JSON.stringify(session.gameState));
                 Active.gameArr.push(ws);
+                return true;
             } 
-            return true;
         }
 
     });
@@ -96,6 +101,10 @@ function reconnecChecker(ws) {
 
 function prepareSocket(playerSymbol, sID) {
 
+    console.log("prepareSocket");
+    console.log("match id ="+sID);
+    console.log("sending new match data to "+playerSymbol);
+    
     if (Active.sessArr[sID][playerSymbol].ws.readyState === 0) //quick fix, probably a bad idea
         prepareSocket(playerSymbol, sID);
     
@@ -109,7 +118,7 @@ function prepareSocket(playerSymbol, sID) {
     if (Active.sessArr[sID][playerSymbol].ws.readyState === 1) { //don't send messages to closed sockets
         Active.sessArr[sID][playerSymbol].ws.send(JSON.stringify(Active.sessArr[sID][playerSymbol].hand)); //send game info to player
         Active.sessArr[sID][playerSymbol].ws.send(JSON.stringify(Active.sessArr[sID].gameState));
-    } else {wsStartModule
+    } else {
         if (playerSymbol === 'player1')
             Active.sessArr[sID].player2.ws.send("O oponente desconectou antes do inicio da partida");
         else
