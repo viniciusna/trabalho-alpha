@@ -23,7 +23,6 @@ module.exports = function (User, isNewUser) {
         fs.writeFile('./database/users.json', toWrite, (err, out) => {
             if (err) { console.log("ERROR: User ID: " + User.id + "on writing database: "); throw console.log(err) };
         });
-        console.log("User ID: " + User.id + ' registered on database');
     
     });
 

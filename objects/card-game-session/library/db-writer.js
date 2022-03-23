@@ -6,7 +6,6 @@ const fs = require('fs');
 //function stores session on database and sends message to players who have an OPEN socket
 
 module.exports = function (Session, winner) { //IMPORTANT, ONLY ACCEPTS 'draw', 'p1' OR 'p2' STRING TYPES, LOWERCASE
-    console.log("CardGameSession object --> storeOnDatabase(fn) --> SessionNum:" + Session.sID);
     
     if (Session.player1.ws.readyState === 1)
         Session.player1.ws.send(JSON.stringify(Session.gameState));
@@ -36,9 +35,8 @@ module.exports = function (Session, winner) { //IMPORTANT, ONLY ACCEPTS 'draw', 
         if (Session.player2.ws.readyState === 1)
             Session.player2.ws.send("Empate!");
     } 
-    
-    else
-        console.log("CardGameSession object --> storeOnDatabase(fn) --> INVALID WINNER STRING --> SessionNum: " + Session.sID); 
+
+
     
     if (Session.player1.ws.readyState === 1 || Session.player1.ws.readyState === 0) {
        Session.player1.ws.close(1000, 'match has finished'); //close socket and warn front that everything is fine  
@@ -78,7 +76,6 @@ module.exports = function (Session, winner) { //IMPORTANT, ONLY ACCEPTS 'draw', 
         fs.writeFile('./database/game-sessions.json', toWrite, (err, out) => {
             if (err) { console.log("ERROR: SessionNum:" + Session.sID + "on writing database: "); throw console.log(err) };
         });
-        console.log("CardGameSession object --> storeOnDatabase(fn) --> session num: " + Session.sID + ' registered on database');
         Session = null; //nullify session for it to be replaced on the active game sessions array
     });
 
