@@ -2,9 +2,15 @@ const CardGameSession = require('../../objects/card-game-session/constructor.js'
 const Active = require('./ws-message.js');  //imports active game sessions array && game sockets array (array stores sockets currently playing)
 
 const waitSockArr = [];  //store sockets waiting for other players
+const wss = require('../../socket-server.js');
 
 function wsStart(ws, req) {
 
+    waitSockArr.forEach( ( el, index ) => {
+        if (el.readyState > 1)
+            waitSockArr.splice(index, 1);
+    });
+    
     ws.reconKey = req.sessionID; //put session data into socket
     ws.isAlive = true; //assures the connection is alive, set to true on pong, set to false on timer
 
@@ -14,10 +20,7 @@ function wsStart(ws, req) {
     ws.waitingLine = true; //don't let player on the waiting line for too long, if this is true, timer is also triggered
     ws.lineTimer = 10;
     waitSockArr.push(ws); //goes to end of waiting line and...
-    waitSockArr.forEach( ( el, index ) => {
-        if (el.readyState > 1)
-            waitSockArr.splice(index, 1); 
-    });
+
     waitLineChecker();  //is passed to the function below
 
 }
@@ -25,7 +28,7 @@ function wsStart(ws, req) {
 function waitLineChecker() {
     
     if (waitSockArr.length >= 2) { //2 or more players, create a match
-
+        
         Active.gameArr.push(waitSockArr.shift(), waitSockArr.shift()); //puts first 2 players on the line into the end of the game socket array
 
         let aID;
@@ -44,44 +47,28 @@ function waitLineChecker() {
 
         Active.sessArr[aID].aID = aID;  //save access id, just in case
         Active.sessArr[aID].gameState.accessID = Active.sessArr[aID].aID;
-        
-        console.log("new match id:" + Active.sessArr[aID].sID + " created");
-        console.log("new match access id = " + Active.sessArr[aID].aID);
 
         prepareSocket('player1', aID);
         prepareSocket('player2', aID);
 
-        //console.log(Active.sessArr[aID]);
-
         waitLineChecker(); //try again in case there's more players
 
-    } else {
-        console.log("waitLineChecker --> only 1 player in line");
+    } else 
         return; //keep waiting
-    }
 }
 
 
 
 function reconnecChecker(ws) {
 
-    console.log("reconnecChecker");
-
     if (ws.readyState === 0) //quick fix, probably a bad idea
         reconnecChecker(ws);
-
-    console.log("checking if player recon key belongs to session -->" + ws.reconKey);
 
     Active.sessArr.forEach(session => {
         
         if (!session.isFinished) {
 
-            console.log("session reconn key for p1 = " + session.player1.reconKey);
-            console.log("session reconn key for p2 = " + session.player1.reconKey);
-
             if (session.player1.reconKey === ws.reconKey) {
-                console.log("p1 reconnect");
-                console.log("acces id = " + session.aID);
                 session.player1.ws = ws;  //re-assing socket 
                 session.player1.ws.aID = session.aID;
                 if (session.player1.ws.readyState === 1) { //don't send messages to closed sockets
@@ -94,7 +81,6 @@ function reconnecChecker(ws) {
             }
 
             else if (session.player2.reconKey === ws.reconKey) {
-                console.log("p2 reconnect");
                 session.player2.ws = ws;  //re-assing socket
                 session.player2.ws.aID = session.aID;
                 if (session.player2.ws.readyState === 1) { //don't send messages to closed sockets
@@ -117,9 +103,6 @@ function reconnecChecker(ws) {
 
 function prepareSocket(playerSymbol, aID) {
 
-    console.log("I will send match data to player" + playerSymbol + ", match ID = " + Active.sessArr[aID].sID + " acces id = " + Active.sessArr[aID].aID);
-    console.log("player " + playerSymbol + " acces id = " + Active.sessArr[aID][playerSymbol].ws.aID);
-
     if (Active.sessArr[aID][playerSymbol].ws.readyState === 0) //quick fix, probably a bad idea
         prepareSocket(playerSymbol, aID);
 
@@ -129,9 +112,7 @@ function prepareSocket(playerSymbol, aID) {
     Active.sessArr[aID][playerSymbol].reconKey = Active.sessArr[aID][playerSymbol].ws.reconKey;
 
     if (Active.sessArr[aID][playerSymbol].ws.readyState === 1) { //don't send messages to closed sockets
-        console.log("sending hand: " + Active.sessArr[aID][playerSymbol].hand + " to " + playerSymbol + ", match ID = " + Active.sessArr[aID].sID + " acces id = " + Active.sessArr[aID].aID);
         Active.sessArr[aID][playerSymbol].ws.send(JSON.stringify(Active.sessArr[aID][playerSymbol].hand)); //send game info to player
-        console.log("sending gamestate: " + Active.sessArr[aID].gameState + " to " + playerSymbol + ", match ID = " + Active.sessArr[aID].sID + " acces id = " + Active.sessArr[aID].aID);
         Active.sessArr[aID][playerSymbol].ws.send(JSON.stringify(Active.sessArr[aID].gameState));
     } else {
         if (playerSymbol === 'player1')

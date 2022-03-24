@@ -88,7 +88,6 @@ module.exports = function (Session, winner, isDc = false) { //IMPORTANT, ONLY AC
         });
 
         Session.isFinished = true;
-        console.log("session id:"+Session.sID+" finished = "+Session.isFinished);
     });
 
 }
