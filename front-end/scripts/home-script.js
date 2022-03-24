@@ -53,7 +53,7 @@ document.getElementById('play-now-button').addEventListener('click', () => {
             console.log(obj)
 
             if ( whichPlayer === 'p1' && obj.player1turn ) {
-                console.log("vc primeiro")
+                ("vc primeiro")
                 youStart = true
             } else if ( whichPlayer === 'p2' && !obj.player1turn ) {
                 console.log("vc primeiro")

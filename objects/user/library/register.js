@@ -10,7 +10,7 @@ function usrReg(data, res) {
     let lowName = data.name.toLowerCase();
     let lowEmail = data.email.toLowerCase();
     
-    let unavailable = db.some( el => {
+    let unavailable = db.some( el => { //checks if users and email are available
         
         if (el.name.toLowerCase() === lowName) {
             res.send("Nickname não disponível");
@@ -27,7 +27,7 @@ function usrReg(data, res) {
 
     });
 
-    if (!unavailable) {
+    if (!unavailable) { //if yes, register new user
         storeUsr(new User(data.name, data.email, data.password), true);
         res.send("Conta registrada, bem vindo "+data.name+" !");
         return true;

@@ -1,3 +1,6 @@
+//+------------------------------------------------------------------+
+//|                        CHANGES USER DATA                         |
+//+------------------------------------------------------------------+
 const crypto = require('crypto');
 const fs = require('fs');
 
@@ -6,9 +9,9 @@ const dbChanger = require('./db-writer.js');
 function userChange(data, res, isDelete = false) {
 
     let uFile = fs.readFileSync('./database/users.json');   
-    let pFile = JSON.parse(uFile);
+    let pFile = JSON.parse(uFile); 
 
-    let userIndex = pFile.findIndex(user => {
+    let userIndex = pFile.findIndex(user => { //find user ID on db
         return (data.id === user.name || data.id === user.email);
     });
 
@@ -32,9 +35,9 @@ function userChange(data, res, isDelete = false) {
                 hash: crypto.pbkdf2Sync(data.newPassword, newSalt, 2048, 128, `sha512`).toString(`hex`)
             }, false);
 
-            if (isDelete)
+            if (isDelete) //user wants to delete acc
                 res.send("Sua conta foi desativada, sentiremos sua falta " + pFile[userIndex].name);
-            else
+            else  //user wants to change acc data
                 res.send("Dados Alterados");
         
         }
