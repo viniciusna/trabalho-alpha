@@ -2,7 +2,7 @@ const crypto = require('crypto');
 const fs = require('fs');
 
 
-function userLogin(data, res) {  //safety
+function userLogin(req, data, res) {  //safety
 
     let uFile = fs.readFileSync('./database/users.json'); 
     let pFile = JSON.parse(uFile);

@@ -42,7 +42,7 @@ app.post('/register', (req, res) => usrReg(req.body, res)); //register
 const userLogout = require('./server-modules/rest/user-logout.js');
 const userLogin = require('./server-modules/rest/user-login.js');
 
-app.post('/login', (req, res) => userLogin(req.body, res));
+app.post('/login', (req, res) => userLogin(req, req.body, res));
 app.delete('/logout', (req, res) => userLogout(req, res));
 
 //+-----------------------------------------------------------------------------------------------+
