@@ -23,6 +23,8 @@ var hand
 
 document.getElementById('play-now-button').addEventListener('click', () => {
 
+    $("#play-now-button").prop("disabled",true);
+
   socket = new WebSocket(`ws://${url}:${port}/`);
 
   socket.onmessage = (event) => {
@@ -69,6 +71,16 @@ document.getElementById('play-now-button').addEventListener('click', () => {
     }
 
   }
+
+  socket.onclose = (event) => {
+    console.log("SOCKET CLOSE: ");
+    console.log(event);
+    console.log("CLOSE CODE: " + event.code);
+    console.log("CLOSE REASON: " + event.reason);
+
+    closeModalHome("modal-loading")
+    openModalHome("modal-timeout")
+}
 });
 
 function prepareTheGame(data) {
