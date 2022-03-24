@@ -40,8 +40,10 @@ function message(data, isBinary, ws) {
             roundChecker(SessionArr[ws.aID])
         }
 
-    if (SessionArr[ws.aID].player1.ws.readyState === 1)  
-        SessionArr[ws.aID].player1.ws.send(JSON.stringify(SessionArr[ws.aID].player1.hand));
+        if (SessionArr[ws.aID].player1.ws !== null) {
+            if (SessionArr[ws.aID].player1.ws.readyState === 1)  
+            SessionArr[ws.aID].player1.ws.send(JSON.stringify(SessionArr[ws.aID].player1.hand));
+        }
 
     }
 
@@ -63,8 +65,10 @@ function message(data, isBinary, ws) {
             roundChecker(SessionArr[ws.aID]);
         }
 
-    if (SessionArr[ws.aID].player2.ws.readyState === 1)    
-        SessionArr[ws.aID].player2.ws.send(JSON.stringify(SessionArr[ws.aID].player2.hand));
+        if (SessionArr[ws.aID].player1.ws !== null) {
+            if (SessionArr[ws.aID].player2.ws.readyState === 1)    
+                SessionArr[ws.aID].player2.ws.send(JSON.stringify(SessionArr[ws.aID].player2.hand));
+        }
 
     }
     else
