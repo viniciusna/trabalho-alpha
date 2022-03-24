@@ -21,8 +21,6 @@ function wsStart(ws, req) {
 function waitLineChecker() {
     if (waitSockArr.length >= 2) { //2 or more players, create a match
         
-        console.log("waitLineChecker --> creating match");
-        
         Active.gameArr.push(waitSockArr.shift(), waitSockArr.shift()); //puts first 2 players on the line into the end of the game socket array
 
         let sID;
@@ -41,6 +39,10 @@ function waitLineChecker() {
         }
 
         Active.sessArr[sID].aID = sID;  //save access id, just in case
+
+        console.log("match id:" +sID+" created");
+        console.log("acces id = " +Active.sessArr[sID].aID);
+
 
         prepareSocket('player1', sID);
         prepareSocket('player2', sID);
@@ -101,9 +103,7 @@ function reconnecChecker(ws) {
 
 function prepareSocket(playerSymbol, sID) {
 
-    console.log("prepareSocket");
-    console.log("match id ="+sID);
-    console.log("sending new match data to "+playerSymbol);
+    console.log("I will send match data to player" +playerSymbol+", match ID = "+Active.sessArr[sID].sID);
     
     if (Active.sessArr[sID][playerSymbol].ws.readyState === 0) //quick fix, probably a bad idea
         prepareSocket(playerSymbol, sID);
@@ -116,7 +116,9 @@ function prepareSocket(playerSymbol, sID) {
     //console.log(Active.sessArr[sID][playerSymbol].reconKey)
 
     if (Active.sessArr[sID][playerSymbol].ws.readyState === 1) { //don't send messages to closed sockets
+        console.log("sending hand: "+Active.sessArr[sID][playerSymbol].hand+" to " +playerSymbol+", match ID = "+Active.sessArr[sID].sID);
         Active.sessArr[sID][playerSymbol].ws.send(JSON.stringify(Active.sessArr[sID][playerSymbol].hand)); //send game info to player
+        console.log("sending gamestate: "+Active.sessArr[sID][playerSymbol].gameState+" to " +playerSymbol+", match ID = "+Active.sessArr[sID].sID);
         Active.sessArr[sID][playerSymbol].ws.send(JSON.stringify(Active.sessArr[sID].gameState));
     } else {
         if (playerSymbol === 'player1')

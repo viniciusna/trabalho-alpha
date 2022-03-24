@@ -83,4 +83,6 @@ module.exports = function (Session, winner, isDc = false) { //IMPORTANT, ONLY AC
         Session = null; //nullify session for it to be replaced on the active game sessions array
     });
 
+    console.log("match ID: "+ Session.sID+" finalized, stored on database");
+
 }
