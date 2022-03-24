@@ -73,7 +73,7 @@ function reconnecChecker(ws) {
             console.log("p1 reconnect");
             session.player1.ws = ws;  //re-assing socket 
             if (session.player1.ws.readyState === 1) { //don't send messages to closed sockets
-                ws.send(JSON.stringify('p1'));
+                ws.send('p1');
                 ws.send(JSON.stringify(session.player1.hand)); //send game info to player
                 ws.send(JSON.stringify(session.gameState));
                 Active.gameArr.push(ws);
@@ -85,7 +85,7 @@ function reconnecChecker(ws) {
             console.log("p2 reconnect");
             session.player2.ws = ws;  //re-assing socket
             if (session.player2.ws.readyState === 1) { //don't send messages to closed sockets
-                ws.send(JSON.stringify('p2'));
+                ws.send('p2');
                 ws.send(JSON.stringify(session.player2.hand)); //send game info to player
                 ws.send(JSON.stringify(session.gameState));
                 Active.gameArr.push(ws);
@@ -103,7 +103,7 @@ function reconnecChecker(ws) {
 
 function prepareSocket(playerSymbol, sID) {
 
-    console.log("I will send match data to player" +playerSymbol+", match ID = "+Active.sessArr[sID].sID);
+    console.log("I will send match data to player" +playerSymbol+", match ID = "+Active.sessArr[sID].sID+" acces id = "+Active.sessArr[sID].aID);
     
     if (Active.sessArr[sID][playerSymbol].ws.readyState === 0) //quick fix, probably a bad idea
         prepareSocket(playerSymbol, sID);
@@ -113,12 +113,10 @@ function prepareSocket(playerSymbol, sID) {
 
     Active.sessArr[sID][playerSymbol].reconKey = Active.sessArr[sID][playerSymbol].ws.reconKey; 
 
-    //console.log(Active.sessArr[sID][playerSymbol].reconKey)
-
     if (Active.sessArr[sID][playerSymbol].ws.readyState === 1) { //don't send messages to closed sockets
-        console.log("sending hand: "+Active.sessArr[sID][playerSymbol].hand+" to " +playerSymbol+", match ID = "+Active.sessArr[sID].sID);
+        console.log("sending hand: "+Active.sessArr[sID][playerSymbol].hand+" to " +playerSymbol+", match ID = "+Active.sessArr[sID].sID+" acces id = "+Active.sessArr[sID].aID);
         Active.sessArr[sID][playerSymbol].ws.send(JSON.stringify(Active.sessArr[sID][playerSymbol].hand)); //send game info to player
-        console.log("sending gamestate: "+Active.sessArr[sID][playerSymbol].gameState+" to " +playerSymbol+", match ID = "+Active.sessArr[sID].sID);
+        console.log("sending gamestate: "+Active.sessArr[sID].gameState+" to " +playerSymbol+", match ID = "+Active.sessArr[sID].sID+" acces id = "+Active.sessArr[sID].aID);
         Active.sessArr[sID][playerSymbol].ws.send(JSON.stringify(Active.sessArr[sID].gameState));
     } else {
         if (playerSymbol === 'player1')

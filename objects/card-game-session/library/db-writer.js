@@ -20,7 +20,6 @@ module.exports = function (Session, winner, isDc = false) { //IMPORTANT, ONLY AC
             Session.player1.ws.close(4001, "O seu oponente desconectou");
         else if (Session.player2.ws.readyState === 1)
             Session.player2.ws.send("Voce perdeu");
-        //TODO: check account and give points
     } 
     
     else if (winner === 'p2') {
@@ -30,7 +29,6 @@ module.exports = function (Session, winner, isDc = false) { //IMPORTANT, ONLY AC
             Session.player2.ws.send("Voce ganhou!");
         if (isDc)
             Session.player2.ws.close(4001, "O seu oponente desconectou");
-        //TODO: check account and give points
     }
     
     else if (winner === 'draw') {
@@ -42,17 +40,19 @@ module.exports = function (Session, winner, isDc = false) { //IMPORTANT, ONLY AC
 
 
     
-    if (Session.player1.ws.readyState === 1 || Session.player1.ws.readyState === 0) {
+    if (Session.player1.ws.readyState === 1) {
        Session.player1.ws.close(1000, 'match has finished'); //close socket and warn front that everything is fine  
        Session.player1.ws.terminate(); //safety
     } 
-    if (Session.player2.ws.readyState === 1 || Session.player2.ws.readyState === 0) {
+    if (Session.player2.ws.readyState === 1) {
         Session.player2.ws.close(1000, 'match has finished');
         Session.player2.ws.terminate(); //safety
     } 
 
     Session.player1.reconKey = null; //clear reconnection keys
     Session.player2.reconKey = null;
+    Session.player1.ws = null; //clear reconnection keys
+    Session.player2.ws = null;
     
     
     fs.readFile('./database/game-sessions.json', (err, readData) => { //save match data on database
