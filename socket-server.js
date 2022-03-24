@@ -40,10 +40,8 @@ wss.on('connection', (ws, req) => {
 const wssTimer = setInterval( () => {
 
   wss.clients.forEach( ws => {
-    if (ws.isAlive === false) {
+    if (ws.isAlive === false)
       ws.terminate();
-      console.log("puxou cabo");
-    }
         
     ws.isAlive = false;
     ws.ping();
