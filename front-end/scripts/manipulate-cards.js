@@ -1,6 +1,17 @@
 let isMyTurn = false
 
+let myStr = document.cookie;
+let endIndex = myStr.indexOf('=');
+let myName = myStr.slice(0, endIndex);
+
 $(document).ready( () => {
+    if(whichPlayer === "p1"){
+        $("#span-player1").text(myName)
+    }else{
+        if(whichPlayer === "p2"){
+            $("#span-player2").text(myName)
+        }
+    }
     $(".btn-back-to-home").attr("href", `http://${url}:${port}`)
 
     $(".cards-in-hand").draggable({
@@ -53,7 +64,6 @@ socket.onopen = (event) => {
 let gameState
 
 socket.onmessage = (event) => {
-
     try {
         clearTimeout(timeout)
 
@@ -125,6 +135,7 @@ socket.onclose = (event) => {
     }
 }
 
+
 let timeout = setInterval(() => {
     $(".cards-in-hand").draggable({
         revert: "invalid",
@@ -132,7 +143,6 @@ let timeout = setInterval(() => {
 }, 500);
 
 function turnControlAndPlayCard() {
-
     if (isMyTurn) {
             $("#playing-card-field").droppable({
                 disabled: false,
