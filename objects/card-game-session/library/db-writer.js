@@ -9,6 +9,8 @@ module.exports = function (Session, winner, isDc = false) { //IMPORTANT, ONLY AC
     
     if (Session.isFinished)
         return;
+
+    Session.isFinished = true;
     
     if (Session.player1.ws.readyState === 1) 
         Session.player1.ws.send(JSON.stringify(Session.gameState));
@@ -87,7 +89,7 @@ module.exports = function (Session, winner, isDc = false) { //IMPORTANT, ONLY AC
             if (err) { console.log("ERROR: SessionNum:" + Session.sID + "on writing database: "); throw console.log(err) };
         });
 
-        Session.isFinished = true;
+        console.log("match id = "+Session.sID+ " saved on DB");
     });
 
 }

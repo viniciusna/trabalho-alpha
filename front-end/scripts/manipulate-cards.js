@@ -66,6 +66,11 @@ socket.onopen = (event) => {
 
 let gameState
 
+socket.onerror = (event) => {
+    console.log("forced socket close");
+    console.log(event);
+}
+
 socket.onmessage = (event) => {
     try {
         clearTimeout(timeout)
