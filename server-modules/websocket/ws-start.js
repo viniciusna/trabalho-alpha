@@ -14,10 +14,8 @@ function wsStart(ws, req) {
     ws.reconKey = req.sessionID; //put session data into socket
     ws.isAlive = true; //assures the connection is alive, set to true on pong, set to false on timer
 
-    if (reconnecChecker(ws))
+    if(reconnecChecker(ws))
         return;
-
-    console.log("going on");
 
     ws.waitingLine = true; //don't let player on the waiting line for too long, if this is true, timer is also triggered
     ws.lineTimer = 10;
@@ -63,6 +61,8 @@ function waitLineChecker() {
 
 function reconnecChecker(ws) {
 
+    let isRec = false
+
     if (ws.readyState === 0) //quick fix, probably a bad idea
         reconnecChecker(ws);
 
@@ -79,7 +79,7 @@ function reconnecChecker(ws) {
                     ws.send('p1');
                     ws.send(JSON.stringify(session.player1.hand)); //send game info to player
                     ws.send(JSON.stringify(session.gameState));
-                    return true;
+                    isRec = true;
                 }
             }
 
@@ -91,14 +91,14 @@ function reconnecChecker(ws) {
                     ws.send('p2');
                     ws.send(JSON.stringify(session.player2.hand)); //send game info to player
                     ws.send(JSON.stringify(session.gameState));
-                    return true;
+                    isRec = true;
                 }
             }
 
         }
     });
 
-    return false;
+    return isRec;
 
 }
 
