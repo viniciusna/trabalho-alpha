@@ -29,7 +29,7 @@ wss.on('close', () => { //clear timer if socket server closes
 
 wss.on('connection', (ws, req) => {
     ws.on('error', (error) => { console.log(error); });  //if error, caught first hand  
-    ws.on('pong', () => { ws.isAlive = true }); //on pong, we are sure socket is alive
+    ws.on('pong', function(){ (ws) => ws.isAlive = true }); //on pong, we are sure socket is alive
     ws.on('close', () => wsCloseModule.close(ws));
     
     wsStartModule.wsStart(ws, req); //run this function before setting socket up to exchange messages
