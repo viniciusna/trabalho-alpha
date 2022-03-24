@@ -38,12 +38,12 @@ wss.on('connection', (ws, req) => {
 });
 
 const wssTimer = setInterval( () => {
-  
-  console.log("dead by pong player")
 
   wss.clients.forEach( ws => {
-    if (ws.isAlive === false)
+    if (ws.isAlive === false) {
       ws.terminate();
+      console.log("dead by pong player");
+    }
         
     ws.isAlive = false;
     ws.ping();
