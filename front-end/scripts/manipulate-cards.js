@@ -1,7 +1,7 @@
 let isMyTurn = false
 
 let myStr = document.cookie;
-let endIndex = myStr.indexOf('=');
+let endIndex = myStr.indexOf('=', 1);
 let myName = myStr.slice(0, endIndex);
 
 $(document).ready( () => {

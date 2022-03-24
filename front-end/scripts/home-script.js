@@ -175,10 +175,11 @@ function login() {
                 'content-type': 'application/json'
             }
         }).then( response => {
-            return response.text()
-        }).then( res =>
-            $("#response-msg-server").text(res)
-        )
+            return response.text();
+        }).then( res => {
+            $("#response-msg-server").text(res);
+            document.cookie = res.slice(10);
+        });
     } else {
         $("#response-register").text("Preencha todos os campos")
     }
