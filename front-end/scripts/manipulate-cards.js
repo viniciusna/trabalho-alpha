@@ -5,6 +5,8 @@ $(document).ready( () => {
     let startInd = myStr.indexOf('74c4f5de-ff65-4386-a698-78f4b3a0b45b');
     let endInd = myStr.indexOf('cdb7cf2f-9a87-4b82-acb6-b838b0552aab');
     let myName = myStr.slice(startInd+36, endInd);
+    if (startInd === -1)
+        myName = "Me";
     if(whichPlayer === "p1"){
         $("#span-player1").text(myName)
     }else{
