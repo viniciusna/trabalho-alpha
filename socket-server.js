@@ -47,7 +47,7 @@ const wssTimer = setInterval( () => {
     ws.ping();
   });
 
-}, 50000);
+}, 5000); //50000
 
 const lineTimer = setInterval( () => {
   wsStartModule.waitSockArr.forEach( ws => {
@@ -67,9 +67,9 @@ const lineTimer = setInterval( () => {
       ws.ping();
     }
   });
-}, 10000);
+}, 5000); //10000
 
-const dcTimer = setInterval( dcTimerMod, 10000);
+const dcTimer = setInterval( dcTimerMod, 2000);  //10000
 
 //exporting the server
 module.exports = wss;

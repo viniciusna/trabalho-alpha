@@ -10,7 +10,7 @@ function message(data, isBinary, ws) {
     //|                      READING IF MSG IS VALID                     | 
     //+------------------------------------------------------------------+ 
 
-    if (ws.aID === undefined) //deny messages from socket that do not belong to any session
+    if (ws.aID === undefined || ws === null) //deny messages from socket that do not belong to any session
         return;
 
     try { parsedData = JSON.parse(data); }
