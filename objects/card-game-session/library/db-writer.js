@@ -89,7 +89,7 @@ module.exports = function (Session, winner, isDc = false) { //IMPORTANT, ONLY AC
             if (err) { console.log("ERROR: SessionNum:" + Session.sID + "on writing database: "); throw console.log(err) };
         });
 
-        console.log("")
+        console.log("match id = "+Session.sID+ " saved on DB");
     });
 
 }

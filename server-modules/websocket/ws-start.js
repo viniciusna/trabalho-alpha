@@ -17,6 +17,8 @@ function wsStart(ws, req) {
     if (reconnecChecker(ws))
         return;
 
+    console.log("going on");
+
     ws.waitingLine = true; //don't let player on the waiting line for too long, if this is true, timer is also triggered
     ws.lineTimer = 10;
     waitSockArr.push(ws); //goes to end of waiting line and...
@@ -67,27 +69,28 @@ function reconnecChecker(ws) {
     Active.sessArr.forEach(session => {
         
         if (!session.isFinished) {
+            console.log("reconnec trial");
 
             if (session.player1.reconKey === ws.reconKey) {
+                Active.gameArr.push(ws);
                 session.player1.ws = ws;  //re-assing socket 
                 session.player1.ws.aID = session.aID;
                 if (session.player1.ws.readyState === 1) { //don't send messages to closed sockets
                     ws.send('p1');
                     ws.send(JSON.stringify(session.player1.hand)); //send game info to player
                     ws.send(JSON.stringify(session.gameState));
-                    Active.gameArr.push(ws);
                     return true;
                 }
             }
 
             else if (session.player2.reconKey === ws.reconKey) {
+                Active.gameArr.push(ws);
                 session.player2.ws = ws;  //re-assing socket
                 session.player2.ws.aID = session.aID;
                 if (session.player2.ws.readyState === 1) { //don't send messages to closed sockets
                     ws.send('p2');
                     ws.send(JSON.stringify(session.player2.hand)); //send game info to player
                     ws.send(JSON.stringify(session.gameState));
-                    Active.gameArr.push(ws);
                     return true;
                 }
             }
