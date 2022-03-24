@@ -23,6 +23,8 @@ var hand
 
 document.getElementById('play-now-button').addEventListener('click', () => {
 
+    $("#play-now-button").prop("disabled",true);
+
   socket = new WebSocket(`ws://${url}:${port}/`);
 
   socket.onmessage = (event) => {
