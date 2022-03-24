@@ -81,7 +81,9 @@ function reconnecChecker(ws) {
 
             if (session.player1.reconKey === ws.reconKey) {
                 console.log("p1 reconnect");
+                console.log("acces id = " + session.aID);
                 session.player1.ws = ws;  //re-assing socket 
+                session.player1.ws.aID = session.aID;
                 if (session.player1.ws.readyState === 1) { //don't send messages to closed sockets
                     ws.send('p1');
                     ws.send(JSON.stringify(session.player1.hand)); //send game info to player
@@ -94,6 +96,7 @@ function reconnecChecker(ws) {
             else if (session.player2.reconKey === ws.reconKey) {
                 console.log("p2 reconnect");
                 session.player2.ws = ws;  //re-assing socket
+                session.player2.ws.aID = session.aID;
                 if (session.player2.ws.readyState === 1) { //don't send messages to closed sockets
                     ws.send('p2');
                     ws.send(JSON.stringify(session.player2.hand)); //send game info to player
