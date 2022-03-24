@@ -28,7 +28,7 @@ function userLogin(req, data, res) {  //safety
                 req.session.regID = pFile[userIndex].id;
                 req.session.usrName = pFile[userIndex].name;
                 req.session.cookie.expires = 86400000; //log-in lasts 24 hours
-                res.send("Bem vindo " + pFile[userIndex].name);
+                res.send("Bem vindo " + pFile[userIndex].name); //index 10 starts player name
             }
         }
 
