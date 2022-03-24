@@ -74,17 +74,15 @@ module.exports = function (Session, winner, isDc = false) { //IMPORTANT, ONLY AC
                 account: Session.player2.account,
             },
             turnNum: Session.gameState.turnNum,
-            disconnec: Session.serverSide.isDc,
-            hasGivenUp: Session.serverSide.hasGivenUp,
-            hasCheated: Session.serverSide.hasCheated
+            disconnec: isDc
         });
         let toWrite = JSON.stringify(dataBase);
         fs.writeFile('./database/game-sessions.json', toWrite, (err, out) => {
             if (err) { console.log("ERROR: SessionNum:" + Session.sID + "on writing database: "); throw console.log(err) };
         });
-        Session = null; //nullify session for it to be replaced on the active game sessions array
-    });
 
-    console.log("match ID: "+ Session.sID+" finalized, stored on database");
+        Session.isFinished = true;
+        console.log("session id:"+Session.sID+" finished = "+Session.isFinished);
+    });
 
 }

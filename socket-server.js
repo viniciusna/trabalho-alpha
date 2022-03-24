@@ -67,9 +67,9 @@ const lineTimer = setInterval( () => {
       ws.ping();
     }
   });
-}, 1000); //10000
+}, 2000); //10000
 
-const dcTimer = setInterval( dcTimerMod, 4000);  //10000
+const dcTimer = setInterval( dcTimerMod, 2000);  //10000
 
 //exporting the server
 module.exports = wss;

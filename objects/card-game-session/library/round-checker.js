@@ -2,6 +2,7 @@
 //|    TAKES CARES OF GAME RULES & CALL DATABASE-STORE WHEN GAME IS FINISHED     |
 //+------------------------------------------------------------------------------+
 const dbStore = require('./db-writer.js');
+const Active = require('../../../server-modules/websocket/ws-message.js');
 
 module.exports = function (Session) {
 
