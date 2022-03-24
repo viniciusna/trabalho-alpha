@@ -14,14 +14,8 @@ function wsStart(ws, req) {
     ws.reconKey = req.sessionID; //put session data into socket
     ws.isAlive = true; //assures the connection is alive, set to true on pong, set to false on timer
 
-    let didRec = reconnecChecker(ws);
-
-    console.log("didrec = "+didRec);
-
-    if (didRec)
+    if(reconnecChecker(ws))
         return;
-
-    console.log("going on");
 
     ws.waitingLine = true; //don't let player on the waiting line for too long, if this is true, timer is also triggered
     ws.lineTimer = 10;
