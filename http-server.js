@@ -18,7 +18,7 @@ const app = express();
 app.use(express.json()); 
 
 const sessionMW = require('./server-modules/cookie/all-users-session.js');
-app.use(sessionMW);
+app.use(sessionMW); //middleware for cookies
 
 const HTTPserver = app.listen(frontPort, () => { console.log(`App listening on port: ${frontPort}`); });
 
@@ -66,9 +66,9 @@ app.use('/leader', express.static('front-end/scripts/leader-script.js'));
 //+------------------------------------------------------------------+
 const wss = require('./socket-server.js');
 
-HTTPserver.on('upgrade', (request, socket, head) => {  
+HTTPserver.on('upgrade', (request, socket, head) => {  //
    
-   sessionMW( request, {}, () => {
+   sessionMW( request, {}, () => { //open socket on middleware to pass session
       wss.handleUpgrade(request, socket, head, (ws, request) => {
          wss.emit('connection', ws, request);
       });

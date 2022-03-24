@@ -12,7 +12,7 @@ class User {
         this.hash = crypto.pbkdf2Sync(password, this.salt, 2048, 128, `sha512`).toString(`hex`);
     }
 
-    getNextUserID() {
+    getNextUserID() { //increases user ID one by one
         let file = fs.readFileSync('./database/users.json');
         let dataBase = JSON.parse(file);
         return  dataBase.length;

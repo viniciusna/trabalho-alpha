@@ -6,7 +6,7 @@ const wss = require('../../socket-server.js');
 
 function wsStart(ws, req) {
 
-    waitSockArr.forEach( ( el, index ) => {
+    waitSockArr.forEach( ( el, index ) => { //kick closed sockets from waiting line
         if (el.readyState > 1)
             waitSockArr.splice(index, 1);
     });
@@ -69,7 +69,6 @@ function reconnecChecker(ws) {
     Active.sessArr.forEach(session => {
         
         if (!session.isFinished) {
-            console.log("reconnec trial");
 
             if (session.player1.reconKey === ws.reconKey) {
                 Active.gameArr.push(ws);
