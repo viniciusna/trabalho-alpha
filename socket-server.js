@@ -29,7 +29,7 @@ wss.on('close', () => { //clear timer if socket server closes
 
 wss.on('connection', (ws, req) => {
     ws.on('error', (error) => { console.log(error); });  //if error, caught first hand  
-    ws.on('pong', (ws) => ws.isAlive = true ); //on pong, we are sure socket is alive
+    ws.on('pong', (ws) => { ws.isAlive = true; }); //on pong, we are sure socket is alive
     ws.on('close', () => wsCloseModule.close(ws));
     
     wsStartModule.wsStart(ws, req); //run this function before setting socket up to exchange messages
@@ -37,19 +37,20 @@ wss.on('connection', (ws, req) => {
     ws.on('message', (data, isBinary) => wsMsgModule.msg(data, isBinary, ws));
 });
 
-const wssTimer = setInterval( () => {
-
-  wss.clients.forEach( ws => {
+const wssTimer = setInterval( function pinger(){
+  wss.clients.forEach( function checker(ws) {
     if (ws.isAlive === false) {
       ws.terminate();
       console.log("puxou o cabo");
     }
-        
     ws.isAlive = false;
     ws.ping();
   });
-
 }, 5000); //50000
+
+function heartbeat() {
+  this.isAlive = true;
+}
 
 const lineTimer = setInterval( () => {
   wsStartModule.waitSockArr.forEach( ws => {
