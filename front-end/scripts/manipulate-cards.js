@@ -5,6 +5,7 @@ $(document).ready( () => {
     let startInd = myStr.indexOf('74c4f5de-ff65-4386-a698-78f4b3a0b45b');
     let endInd = myStr.indexOf('cdb7cf2f-9a87-4b82-acb6-b838b0552aab');
     let myName = myStr.slice(startInd+36, endInd);
+
     if (startInd === -1)
         myName = "Me";
     if(whichPlayer === "p1"){
@@ -107,7 +108,6 @@ socket.onmessage = (event) => {
     } catch {
         console.log(event.data)
     }
-
 }
 
 socket.onclose = (event) => {
@@ -116,6 +116,14 @@ socket.onclose = (event) => {
     console.log(event);
     console.log("CLOSE CODE: " + event.code);
     console.log("CLOSE REASON: " + event.reason);
+
+    if ( event.code === 4001 & event.reason === "O seu oponente desconectou") {
+        $("#description-modal").text("O oponente desconectou, você venceu por W.O")
+        openModalBoard("modal-general")
+    } else if (event.code === 4001 & event.reason === "Voce perdeu por inatividade" ) {
+        $("#description-modal").text("Você demorou para jogar, então perdeu")
+        openModalBoard("modal-general")
+    }
 
     if ( gameState.turnNum == 18 ) {
         if ( gameState.scoreP1 === gameState.scoreP2 ) {
@@ -137,7 +145,6 @@ socket.onclose = (event) => {
     }
 }
 
-
 let timeout = setInterval(() => {
     $(".cards-in-hand").draggable({
         revert: "invalid",
@@ -153,6 +160,7 @@ function turnControlAndPlayCard() {
                     $("#playing-card-field").droppable({ disabled: true })
                     isMyTurn = false
 
+                    console.log(`socket send ${Number(cardImageTagId.slice(-1))}`)
                     socket.send(Number(cardImageTagId.slice(-1)))
                 }
             });
