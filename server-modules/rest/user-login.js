@@ -6,18 +6,9 @@ function userLogin(data, res) {  //safety
 
     let uFile = fs.readFileSync('./database/users.json'); 
     let pFile = JSON.parse(uFile);
-    let pBody;
-
-    try {
-        pBody = JSON.parse(data);
-    } catch (err){
-        console.log(err);
-        res.send("error");
-        return;
-    }
 
     let userIndex = pFile.findIndex(user => {
-        return (pBody.id === user.name || pBody.id === user.email);
+        return (data.id === user.name || data.id === user.email);
     });
 
     if (userIndex === -1) {  //user not found
@@ -27,7 +18,7 @@ function userLogin(data, res) {  //safety
 
     else {
       
-        let hash = crypto.pbkdf2Sync(pBody.password, pFile[userIndex].salt, 2048, 128, `sha512`).toString(`hex`);
+        let hash = crypto.pbkdf2Sync(data.password, pFile[userIndex].salt, 2048, 128, `sha512`).toString(`hex`);
 
         if (pFile[userIndex].hash === hash) {
             if (pFile[userIndex].active = false)
