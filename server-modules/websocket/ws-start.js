@@ -40,8 +40,8 @@ function waitLineChecker() {
 
         Active.sessArr[sID].aID = sID;  //save access id, just in case
 
-        console.log("match id:" +sID+" created");
-        console.log("acces id = " +Active.sessArr[sID].aID);
+        console.log("new match id:" +sID+" created");
+        console.log("new match access id = " +Active.sessArr[sID].aID);
 
 
         prepareSocket('player1', sID);
@@ -64,10 +64,14 @@ function reconnecChecker(ws) {
     console.log("reconnecChecker");
     
     if (ws.readyState === 0) //quick fix, probably a bad idea
-        reconnecChecker(ws);
+        reconnecChecker(ws); 
     
-    
+    console.log("checking if player recon key belongs to session -->"+ws.reconKey);
+
     Active.sessArr.forEach( session => {
+        
+        console.log("session reconn key for p1 = "+session.player1.reconKey);
+        console.log("session reconn key for p2 = "+session.player1.reconKey);
         
         if (session.player1.reconKey = ws.reconKey) {   
             console.log("p1 reconnect");
@@ -104,6 +108,7 @@ function reconnecChecker(ws) {
 function prepareSocket(playerSymbol, sID) {
 
     console.log("I will send match data to player" +playerSymbol+", match ID = "+Active.sessArr[sID].sID+" acces id = "+Active.sessArr[sID].aID);
+    console.log("player "+playerSymbol+" acces id = "+Active.sessArr[sID][playerSymbol].aID);
     
     if (Active.sessArr[sID][playerSymbol].ws.readyState === 0) //quick fix, probably a bad idea
         prepareSocket(playerSymbol, sID);

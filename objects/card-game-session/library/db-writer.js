@@ -13,6 +13,9 @@ module.exports = function (Session, winner, isDc = false) { //IMPORTANT, ONLY AC
     if (Session.player2.ws.readyState === 1) 
         Session.player2.ws.send(JSON.stringify(Session.gameState));
     
+    
+    //TODO: send 4001 to both players
+
     if (winner === 'p1') {  
         if (Session.player1.ws.readyState === 1)    
             Session.player1.ws.send("Voce ganhou!");
@@ -51,9 +54,8 @@ module.exports = function (Session, winner, isDc = false) { //IMPORTANT, ONLY AC
 
     Session.player1.reconKey = null; //clear reconnection keys
     Session.player2.reconKey = null;
-    Session.player1.ws = null; //clear reconnection keys
-    Session.player2.ws = null;
-    
+    Session.player1.ws = null; //clear ws
+    Session.player2.ws = null; 
     
     fs.readFile('./database/game-sessions.json', (err, readData) => { //save match data on database
         if (err) { console.log("ERROR: SessionNum:" + Session.sID + "on reading database: "); throw console.log(err); }
