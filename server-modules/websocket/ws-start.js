@@ -14,7 +14,11 @@ function wsStart(ws, req) {
     ws.reconKey = req.sessionID; //put session data into socket
     ws.isAlive = true; //assures the connection is alive, set to true on pong, set to false on timer
 
-    if (reconnecChecker(ws))
+    let didRec = reconnecChecker(ws);
+
+    console.log("didrec = "+didRec);
+
+    if (didRec)
         return;
 
     console.log("going on");
