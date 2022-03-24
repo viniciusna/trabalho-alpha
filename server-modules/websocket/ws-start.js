@@ -67,6 +67,8 @@ function waitLineChecker() {
 
 function reconnecChecker(ws) {
 
+    let isRec = false
+
     if (ws.readyState === 0) //quick fix, probably a bad idea
         reconnecChecker(ws);
 
@@ -83,7 +85,7 @@ function reconnecChecker(ws) {
                     ws.send('p1');
                     ws.send(JSON.stringify(session.player1.hand)); //send game info to player
                     ws.send(JSON.stringify(session.gameState));
-                    return true;
+                    isRec = true;
                 }
             }
 
@@ -95,14 +97,14 @@ function reconnecChecker(ws) {
                     ws.send('p2');
                     ws.send(JSON.stringify(session.player2.hand)); //send game info to player
                     ws.send(JSON.stringify(session.gameState));
-                    return true;
+                    isRec = true;
                 }
             }
 
         }
     });
 
-    return false;
+    return isRec;
 
 }
 
