@@ -180,7 +180,7 @@ function login() {
             return response.text();
         }).then( res => {
             $("#response-msg-server").text(res);
-            document.cookie = res.slice(10);
+            document.cookie = '74c4f5de-ff65-4386-a698-78f4b3a0b45b'+res.slice(10)+'cdb7cf2f-9a87-4b82-acb6-b838b0552aab';
         });
     } else {
         $("#response-register").text("Preencha todos os campos")
