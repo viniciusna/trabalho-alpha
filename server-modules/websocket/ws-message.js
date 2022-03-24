@@ -10,7 +10,7 @@ function message(data, isBinary, ws) {
     //|                      READING IF MSG IS VALID                     | 
     //+------------------------------------------------------------------+ 
 
-    if (ws.aID === undefined || ws === null) //deny messages from socket that do not belong to any session
+    if ( ws.aID === undefined || ws === null ) //deny messages from socket that do not belong to any session
         return;
 
     try { parsedData = JSON.parse(data); }
@@ -29,7 +29,7 @@ function message(data, isBinary, ws) {
     //+------------------------------------------------------------------+ 
     if (SessionArr[ws.aID].player1.ws === ws) { //player 1 msg  
 
-        SessionArr[ws.aID].player1.ws.timer = 12; //reset afk timer
+        SessionArr[ws.aID].player1.timer = 12; //reset afk timer
         
         if (!SessionArr[ws.aID].gameState.player1turn) //not p1 turn
             return;
@@ -52,7 +52,7 @@ function message(data, isBinary, ws) {
 
     else if (SessionArr[ws.aID].player2.ws === ws) { //player 2 msg
 
-        SessionArr[ws.aID].player2.ws.timer = 12; //reset afk timer
+        SessionArr[ws.aID].player2.timer = 12; //reset afk timer
         
         if (SessionArr[ws.aID].gameState.player1turn)  //not p2 turn
             return;

@@ -12,12 +12,15 @@ module.exports = function (Session, winner, isDc = false) { //IMPORTANT, ONLY AC
     
     if (Session.player2.ws.readyState === 1) 
         Session.player2.ws.send(JSON.stringify(Session.gameState));
-    
+
     if (winner === 'p1') {  
         if (Session.player1.ws.readyState === 1)    
             Session.player1.ws.send("Voce ganhou!");
-        if (isDc)
+        if (isDc) {
             Session.player1.ws.close(4001, "O seu oponente desconectou");
+            if (Session.player2.ws.readyState === 1)
+                Session.player2.ws.close(4001, "Voce perdeu por inatividade");
+        }
         else if (Session.player2.ws.readyState === 1)
             Session.player2.ws.send("Voce perdeu");
     } 
@@ -27,8 +30,11 @@ module.exports = function (Session, winner, isDc = false) { //IMPORTANT, ONLY AC
             Session.player1.ws.send("Voce perdeu");
         if (Session.player2.ws.readyState === 1)
             Session.player2.ws.send("Voce ganhou!");
-        if (isDc)
+        if (isDc) {
             Session.player2.ws.close(4001, "O seu oponente desconectou");
+            if (Session.player1.ws.readyState === 1)
+                Session.player1.ws.close(4001, "Voce perdeu por inatividade");
+        }
     }
     
     else if (winner === 'draw') {
@@ -51,9 +57,8 @@ module.exports = function (Session, winner, isDc = false) { //IMPORTANT, ONLY AC
 
     Session.player1.reconKey = null; //clear reconnection keys
     Session.player2.reconKey = null;
-    Session.player1.ws = null; //clear reconnection keys
-    Session.player2.ws = null;
-    
+    Session.player1.ws = null; //clear ws
+    Session.player2.ws = null; 
     
     fs.readFile('./database/game-sessions.json', (err, readData) => { //save match data on database
         if (err) { console.log("ERROR: SessionNum:" + Session.sID + "on reading database: "); throw console.log(err); }
@@ -72,17 +77,15 @@ module.exports = function (Session, winner, isDc = false) { //IMPORTANT, ONLY AC
                 account: Session.player2.account,
             },
             turnNum: Session.gameState.turnNum,
-            disconnec: Session.serverSide.isDc,
-            hasGivenUp: Session.serverSide.hasGivenUp,
-            hasCheated: Session.serverSide.hasCheated
+            disconnec: isDc
         });
         let toWrite = JSON.stringify(dataBase);
         fs.writeFile('./database/game-sessions.json', toWrite, (err, out) => {
             if (err) { console.log("ERROR: SessionNum:" + Session.sID + "on writing database: "); throw console.log(err) };
         });
-        Session = null; //nullify session for it to be replaced on the active game sessions array
-    });
 
-    console.log("match ID: "+ Session.sID+" finalized, stored on database");
+        Session.isFinished = true;
+        console.log("session id:"+Session.sID+" finished = "+Session.isFinished);
+    });
 
 }

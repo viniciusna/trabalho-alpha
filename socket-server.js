@@ -47,7 +47,7 @@ const wssTimer = setInterval( () => {
     ws.ping();
   });
 
-}, 5000); //50000
+}, 7000); //50000
 
 const lineTimer = setInterval( () => {
   wsStartModule.waitSockArr.forEach( ws => {
@@ -67,7 +67,7 @@ const lineTimer = setInterval( () => {
       ws.ping();
     }
   });
-}, 5000); //10000
+}, 2000); //10000
 
 const dcTimer = setInterval( dcTimerMod, 2000);  //10000
 
