@@ -42,14 +42,14 @@ const wssTimer = setInterval( () => {
   wss.clients.forEach( ws => {
     if (ws.isAlive === false) {
       ws.terminate();
-      console.log("dead by pong player");
+      console.log("puxou cabo");
     }
         
     ws.isAlive = false;
     ws.ping();
   });
 
-}, 3000); //50000
+}, 500); //50000
 
 const lineTimer = setInterval( () => {
   wsStartModule.waitSockArr.forEach( ws => {
