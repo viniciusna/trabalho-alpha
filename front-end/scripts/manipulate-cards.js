@@ -92,8 +92,6 @@ socket.onmessage = (event) => {
             gameState = data
 
             verifyIfIsYourTurn(data)
-            console.log(data)
-            console.log("==============================")
             verifyIfHaveTwoCardsInTheField(data)
         }
 
@@ -117,11 +115,6 @@ socket.onmessage = (event) => {
 
 socket.onclose = (event) => {
 
-    console.log("SOCKET CLOSE: ");
-    console.log(event);
-    console.log("CLOSE CODE: " + event.code);
-    console.log("CLOSE REASON: " + event.reason);
-
     if ( event.code === 4001 & event.reason === "O seu oponente desconectou") {
         $("#description-modal").text("O oponente desconectou, você venceu por W.O")
         openModalBoard("modal-general")
@@ -130,6 +123,7 @@ socket.onclose = (event) => {
         openModalBoard("modal-general")
     }
 
+    //If para tratar o caso de as cartas acabarem
     if ( gameState.turnNum == 18 ) {
         if ( gameState.scoreP1 === gameState.scoreP2 ) {
             $("#description-modal").text("Empate!")
@@ -165,7 +159,6 @@ function turnControlAndPlayCard() {
                     $("#playing-card-field").droppable({ disabled: true })
                     isMyTurn = false
 
-                    console.log(`socket send ${Number(cardImageTagId.slice(-1))}`)
                     socket.send(Number(cardImageTagId.slice(-1)))
                 }
             });
@@ -341,7 +334,6 @@ function cleanTheCardField(tagCardId) {
 }
 
 function verifyCardOnTop() {
-    console.log("board "+ gameState.board)
     if((gameState.board[0] == '') && (gameState.board[1] != '')){
         $("#container-card-player2").css('zIndex',3);
     }else if ((gameState.board[0] != '') && (gameState.board[1] == '')) {
