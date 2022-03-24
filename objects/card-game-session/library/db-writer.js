@@ -7,6 +7,9 @@ const fs = require('fs');
 
 module.exports = function (Session, winner, isDc = false) { //IMPORTANT, ONLY ACCEPTS 'draw', 'p1' OR 'p2' STRING TYPES, LOWERCASE
     
+    if (Session.isFinished)
+        return;
+    
     if (Session.player1.ws.readyState === 1) 
         Session.player1.ws.send(JSON.stringify(Session.gameState));
     
