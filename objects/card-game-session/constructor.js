@@ -14,7 +14,7 @@ class CardGameSession {
       this.aID = null,  //access ID, used for o(1) access to socket game
       
       this.gameState = {
-         matchID: sID,
+         matchID: this.sID,
          turnNum: 1,  
          player1turn: Boolean(Math.round(Math.random())), // randomized true or false, who plays first
          board: ['', ''], // [player1, player2]
