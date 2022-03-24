@@ -27,7 +27,7 @@ class CardGameSession {
       this.player1 = {  //server side only, data about player 1
          regID: null,
          reconKey: null,
-         timer: 8,
+         timer: 10,
          hand: [],
          deck: null,
          ws: wsP1  //CAREFULL WITH RECONNECTIONS!!!
@@ -36,7 +36,7 @@ class CardGameSession {
       this.player2 = {  //server side only, data about player 2
          regID: null,
          reconKey: null,
-         timer: 8,
+         timer: 10,
          hand: [],
          deck: null,
          ws: wsP2 //CAREFULL WITH RECONNECTIONS!!!
