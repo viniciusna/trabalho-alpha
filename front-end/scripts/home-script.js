@@ -151,7 +151,7 @@ function register() {
         const userEmail = $("#input-player-email").val()
         const userpw = $("#input-player-password").val()
 
-        fetch('http://localhost/register/', {
+        fetch('http://108.61.75.223/register/', {
             method: 'POST',
             body: JSON.stringify({
                 name: username,
@@ -177,7 +177,7 @@ function login() {
         const username = $("#input-player-name-login").val()
         const userpw = $("#input-player-password-login").val()
 
-        fetch('http://localhost/login/', {
+        fetch('http://108.61.75.223/login/', {
             method: 'POST',
             body: JSON.stringify({
                 id: username,
