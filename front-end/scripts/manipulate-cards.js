@@ -50,18 +50,27 @@ function greenShine() {
     $("#container-first-hand-card").attr("class", "container-cards-from-hand card green-shine")
     $("#container-second-hand-card").attr("class", "container-cards-from-hand card green-shine")
     $("#container-third-hand-card").attr("class", "container-cards-from-hand card green-shine")
+
+    $("#container-first-hand-card").attr("title", "Arraste para jogar")
+    $("#container-second-hand-card").attr("title", "Arraste para jogar")
+    $("#container-third-hand-card").attr("title", "Arraste para jogar")
 }
 
 function redShine() {
     $("#container-first-hand-card").attr("class", "container-cards-from-hand card red-shine")
     $("#container-second-hand-card").attr("class", "container-cards-from-hand card red-shine")
     $("#container-third-hand-card").attr("class", "container-cards-from-hand card red-shine")
+
+    $("#container-first-hand-card").removeAttr("title")
+    $("#container-second-hand-card").removeAttr("title")
+    $("#container-third-hand-card").removeAttr("title")
 }
 
 let cardImageTagId; //Essa variável serve para pegar a id da imagem da carta que foi jogada, pois isso será usado em diferentes funções
 
+const playCardSound = require('board-scripts.js');
 socket.onopen = (event) => {
-    playCardSound("backgroundSound");
+    playCardSound('backgroundSound');
 }
 
 let gameState

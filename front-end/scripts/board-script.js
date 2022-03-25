@@ -52,7 +52,6 @@ function flipCard() {
     card.style.transform = "rotateY(180deg)";
 }
 
-
 let waterSound = new Audio('board-assets/sounds/waterCardSound.mp3');
 let fireSound = new Audio('board-assets/sounds/fireCardSound.mp3');
 let plantSound = new Audio('board-assets/sounds/plantCardSound.mp3');
@@ -65,7 +64,6 @@ let loserSound = new Audio('board-assets/sounds/roundLoser.mp3');
 
 let cardDrawSound = new Audio('board-assets/sounds/cardDrawSound.mp3');
 let backgroundMusic = new Audio('board-assets/sounds/backgroundSound.mp3');
-
 
 function playCardSound(card) {
     switch (card) {
@@ -129,3 +127,5 @@ function changeSoundConf() {
         backgroundMusic.play();
     }
 }
+
+module.exports = playCardSound;

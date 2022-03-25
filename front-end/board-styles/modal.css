@@ -39,7 +39,7 @@
     align-items: center;
 
     /* Typography */
-    font-size: 36px;
+    font-size: 1.5em;
     line-height: auto;
     text-align: center;
 
@@ -87,14 +87,14 @@
     align-items: center;
 
     /* Typography */
-    font-size: 16px;
+    font-size: 0.8em;
     color: #E5E5E5;
 
     overflow: auto;
 }
 
 #modal-rules h2 {
-    font-size: 48px;
+    font-size: 2.5em;
     font-style: normal;
     font-weight: 400;
 }
@@ -142,7 +142,7 @@
 }
 
 #modal-devs h2 {
-    font-size: 28px;
+    font-size: 1.5em;
 }
 
 #devs-close {
